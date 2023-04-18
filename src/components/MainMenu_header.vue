@@ -1,0 +1,33 @@
+<template>
+  <header class="header_container">
+     <img class="img_main_menu" src="" alt="">
+     <label class="label_main_menu">BeeWork</label>
+  </header>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style scoped>
+.header_container{
+    height: 3em;
+    background-color: rgba(255, 251, 0, 0.247);
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.100);
+}
+.label_main_menu{
+    margin-left: 1em;
+    font-size: 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.img_main_menu{
+    background-color: black;
+    height: 2em;
+    width: 2em;
+}
+</style>

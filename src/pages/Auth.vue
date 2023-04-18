@@ -1,18 +1,13 @@
 <template>
-  <div class="home">
      <AuthContainer>
-        <div class="sign_in_container">
-          <h3 class="auth_el auth_label">Authorization</h3>
+          <label class="auth_el auth_label">Authorization</label>
           <input class="auth_el" type="text" placeholder="Enter your email">
           <input class="auth_el" type="password" placeholder="Enter the password">
           <div class="auth_btns_container">
             <button class="auth_el auth_btn">Sign in</button>
             <a class="auth_el" href="/registration">registration</a>
-          </div>
-         
         </div>
      </AuthContainer>
-  </div>
 </template>
 
 <script>
@@ -24,16 +19,7 @@ export default {
 </script>
 
 <style scoped>
-  .sign_in_container{
-    margin: auto;
-    margin-top: 20%;
-    padding: auto;
-    height: 450px;
-    width: 600px;
-    border: 1px solid rgba(0, 0, 0, 0.455);
-    display: flex;
-    flex-direction: column;
-  }
+  
   .auth_el{
     margin: auto;
     height: 60px;
