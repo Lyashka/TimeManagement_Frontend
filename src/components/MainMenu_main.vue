@@ -1,6 +1,6 @@
 <template>
   <div class="main_container">
-    
+    <slot></slot>
   </div>
 </template>
 
@@ -14,6 +14,6 @@ export default {
 .main_container{
     height: 50em;
     width: 100em;
-    background-color: black;
+    /* background-color: black; */
 }
 </style>
