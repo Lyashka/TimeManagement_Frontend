@@ -1,21 +1,26 @@
 <template>
      <AuthContainer>
+      <form>
           <label class="auth_el auth_label">Authorization</label>
-          <input class="auth_el" type="text" placeholder="Enter your email">
-          <input class="auth_el" type="password" placeholder="Enter the password">
+          <input class="auth_el" type="text" placeholder="Enter your email" v-model="userEmail">
+          <input class="auth_el" type="password" placeholder="Enter the password" v-model="userPassword">
           <div class="auth_btns_container">
-            <button class="auth_el auth_btn">Sign in</button>
+            <button class="auth_el auth_btn" @click.prevent="userStore.getUser(userEmail, userPassword)">Sign in</button>
             <a class="auth_el" href="/registration">registration</a>
         </div>
+      </form>
      </AuthContainer>
 </template>
 
-<script>
+<script setup>
 import AuthContainer from '../components/AuthContainer.vue';
-export default {
-  components: {AuthContainer}
+// import { Ref } from 'vue';
+import { useUserStore } from '../stores/userStore';
+const userStore = useUserStore();
+let userEmail
+let userPassword
 
-}
+
 </script>
 
 <style scoped>
