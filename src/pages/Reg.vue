@@ -1,4 +1,5 @@
 <template>
+  <MainMenu_header/>
     <AuthContainer>
             <label class="reg_el reg_label">Registration</label>
             <input class="reg_el" type="text" placeholder="enter your login">
@@ -8,11 +9,9 @@
     </AuthContainer>
 </template>
 
-<script>
+<script setup>
 import AuthContainer from '../components/AuthContainer.vue';
-export default {
-components: {AuthContainer}
-}
+import MainMenu_header from '../components/MainMenu_header.vue';
 </script>
 
 <style scoped>

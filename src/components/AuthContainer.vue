@@ -13,7 +13,7 @@
 <style scoped>
 .container_auth{
     margin: auto;
-    margin-top: 40px;
+    margin-top: 80px;
     padding: auto;
     height: 600px;
     width: 700px;

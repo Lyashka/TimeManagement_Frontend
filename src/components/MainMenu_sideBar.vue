@@ -15,7 +15,7 @@ export default {
 .MainMenu_sideBar{
     height: 30em;
     width: 15em;
-    border: 1px solid black;
+    border-right: 1px solid rgba(0, 0, 0, 0.200);
     display: flex;
     flex-direction: column;
     padding-top: 1em;
@@ -23,9 +23,8 @@ export default {
 .sideBar_item{
     text-decoration: none;
     height: 2em;
-    font-size: 20px;
+    font-size: x-large;
     padding-left: 0.5em;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: flex;
     align-items: center;
     color: black;

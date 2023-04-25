@@ -1,19 +1,22 @@
 <template>
+  <MainMenu_header/>
      <AuthContainer>
-      <form>
           <label class="auth_el auth_label">Authorization</label>
-          <input class="auth_el" type="text" placeholder="Enter your email" v-model="userEmail">
+          <div>
+            <div class="textNotFoundUser">{{ userStore.notFoundUser }}</div>
+            <input class="auth_el" type="text" placeholder="Enter your email" v-model="userEmail">
+          </div>
           <input class="auth_el" type="password" placeholder="Enter the password" v-model="userPassword">
           <div class="auth_btns_container">
             <button class="auth_el auth_btn" @click.prevent="userStore.getUser(userEmail, userPassword)">Sign in</button>
             <a class="auth_el" href="/registration">registration</a>
         </div>
-      </form>
      </AuthContainer>
 </template>
 
 <script setup>
 import AuthContainer from '../components/AuthContainer.vue';
+import MainMenu_header from '../components/MainMenu_header.vue';
 // import { Ref } from 'vue';
 import { useUserStore } from '../stores/userStore';
 const userStore = useUserStore();
@@ -24,7 +27,6 @@ let userPassword
 </script>
 
 <style scoped>
-  
   .auth_el{
     margin: auto;
     height: 60px;
@@ -52,5 +54,10 @@ let userPassword
   .auth_btns_container{
     display: flex;
     flex-direction: column;
+  }
+  .textNotFoundUser{
+    display: flex;
+    justify-content: center;
+    color: rgb(235, 18, 18)
   }
 </style>

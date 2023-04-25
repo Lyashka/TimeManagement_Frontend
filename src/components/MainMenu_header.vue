@@ -4,20 +4,22 @@
         <img class="img_main_menu" src="" alt="">
         <label class="label_main_menu">BeeWork</label>
     </div>
-     <button class="userBtnPanel">{{  }}</button>
+    <div v-if="userStore.user[0] !== undefined" class="rigth_container_el">
+        <label  class="text_User_Name">{{ userStore.user[0].user_name }}</label>
+        <button class="userBtnPanel"></button>
+    </div>
   </header>
 </template>
 
-<script>
-export default {
-    
-    }
+<script setup>
+import { useUserStore } from '../stores/userStore';
+const userStore = useUserStore();
 </script>
 
 <style scoped>
 .header_container{
     height: 3em;
-    background-color: rgba(255, 251, 0, 0.247);
+    background-color: rgba(255, 251, 0, 0.153);
     display: flex;
     align-items: center;
     padding-left: 30px;
@@ -26,8 +28,8 @@ export default {
 }
 .label_main_menu{
     margin-left: 1em;
-    font-size: 20px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: x-large; 
+   
 }
 .img_main_menu{
     background-color: black;
@@ -46,5 +48,14 @@ export default {
     align-items: center;
     padding-left: 30px;
     justify-content: space-between;
+}
+.rigth_container_el{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.text_User_Name{
+    margin-right: 1em;
+    font-size: x-large;
 }
 </style>
