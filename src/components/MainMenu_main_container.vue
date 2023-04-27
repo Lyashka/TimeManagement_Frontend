@@ -40,9 +40,8 @@ switch (new Date().getDay()) {
 
 let dateOnNewDate = new Date().toLocaleDateString()
 
- console.log(userStore.user[0].to_do_list[2].date_start.substr(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3.$2.$1"));
-//  console.log(userStore.user[0].to_do_list[5].date_start)
-console.log(new Date().toLocaleDateString());
+  // console.log(userStore.user[0].to_do_list[2].date_start.substr(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3.$2.$1"));
+  // console.log(new Date().toLocaleDateString());
 </script>
 
 <style scoped>
@@ -51,7 +50,8 @@ console.log(new Date().toLocaleDateString());
     width: 60em;
     border: 1px solid black;
     margin-top: 1em;
-    /* background-color: black; */
+    margin-left: 1em;
+    border-radius: 30px;
 }
 .date_container{
   height: 40px;
@@ -59,5 +59,6 @@ console.log(new Date().toLocaleDateString());
   display: flex;
   align-items: center;
   font-size: x-large;
+  justify-content: center;
 }
 </style>
