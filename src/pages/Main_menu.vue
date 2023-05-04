@@ -3,9 +3,12 @@
   <div class="mainMenu_container">
     <MainMenu_sideBar></MainMenu_sideBar>
     <MainMenu_main_container>
-      <MainMenu_main_today_ltemList  v-for="list of userStore.toDoList" :list="list" :key="list.id">
+      <transition-group name="itemList" tag="div">
+        <MainMenu_main_today_ltemList  v-for="list of userStore.toDoList" :list="list" :key="list.to_do_list_id">
 
-      </MainMenu_main_today_ltemList>
+        </MainMenu_main_today_ltemList>
+      </transition-group>
+     
      
       {{ userStore.toDoList }}
     </MainMenu_main_container>
@@ -25,7 +28,7 @@ export default{
 
   data() { 
     return {
-      showContent: false
+      showContent: false,
     }
   },
 
@@ -33,26 +36,14 @@ export default{
     showContentBar(){
       this.showContent = !this.showContent
     },
-
   },
 
   setup() {
     const userStore = useUserStore();
     userStore.user[0] = JSON.parse(localStorage.getItem('user'))
 
-    
-    // let today_User_toDoList = []; 
-    // userStore.user[0].to_do_list.forEach(item => {
-    //   if (item.date_start.substr(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3.$2.$1") === new Date().toLocaleDateString()) {
-    //     userStore.toDoList.push(item)
-    //     console.log(userStore.toDoList);
-    //     userStore.sortToDoList(userStore.toDoList);
-        
-    //   }
-    // });
       userStore.setToDoList()
       userStore.sortToDoList(userStore.toDoList)
-      console.log(userStore.toDoList);
     return{
       userStore
     }
@@ -66,5 +57,33 @@ export default{
   flex-direction: row;
 }
 
- 
+.itemList-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.itemList-enter-active,
+.itemList-leave-active {
+  transition: all 0.1s ease;
+}
+.itemList-enter-from,
+.itemList-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.itemList-move {
+  transition: transform 0.2s ease;
+}
+.itemList-complete-item {
+  transition: all 0.3s ease;
+  display: inline-block;
+  margin-right: 10px;
+}
+.itemList-complete-enter-from,
+.itemList-complete-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.itemList-complete-leave-active {
+  position: absolute;
+}
 </style>

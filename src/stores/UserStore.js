@@ -27,17 +27,28 @@ export const useUserStore = defineStore('userStore', {
                 } 
             });
         },
+
         sortToDoList(today_User_toDoList){ 
             this.toDoList = today_User_toDoList.sort((prev, next) => {
                 if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return -1;
                 if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return 1;
             })
         },
+
         sortContent(ListContent){
-            ListContent.sort((prev, next) => {
-                if (prev.completed_status < next.completed_status) return -1;
-                if (prev.completed_status < next.completed) return 1;
+            console.log(ListContent);
+            this.toDoList.forEach(e => {
+                if(e.to_do_list_id == ListContent.case_content_id) {
+                    e.content.sort((prev, next) => {
+                            if (prev.completed_status < next.completed_status) return -1;
+                            if (prev.completed_status < next.completed) return 1;
+                        })
+                }
             })
+            // ListContent.sort((prev, next) => {
+            //     if (prev.completed_status < next.completed_status) return -1;
+            //     if (prev.completed_status < next.completed) return 1;
+            // })
         },
 
         setToDoList() {
