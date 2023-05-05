@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <input type="text"  class="main_item" :value="value_content" :class="{'checked' : ischecked}">
         <input class="checkbox" type="checkbox" v-model="check_status" @click="set_check_status()">
     </div>

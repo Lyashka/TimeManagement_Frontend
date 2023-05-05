@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { async } from 'jshint/src/prod-params';
 import {defineStore} from 'pinia'
 
 export const useUserStore = defineStore('userStore', {
@@ -6,6 +7,7 @@ export const useUserStore = defineStore('userStore', {
         user: [],
         notFoundUser: '',
         toDoList: [],
+        newToDoList: {},
     }),
 
     getters: {
@@ -13,13 +15,14 @@ export const useUserStore = defineStore('userStore', {
     },
 
     actions: {
-        getUser(email, password) {
-            axios.get(`http://localhost:8080/api/user?email=${email}&password=${password}`
+        async getUser(email, password) {
+            console.log(email, password);
+            await axios.get(`http://localhost:8080/api/user?email=${email}&password=${password}`
             ).then(res => { 
                 if(res.data == ''){
                     this.notFoundUser = 'Неверный email или пароль'
                     }else{
-                    // console.log(res.data)
+                    console.log(res.data)
                     this.user = res.data
                     this.notFoundUser = ''
                     window.location.href = '/mainMenu'
@@ -45,10 +48,6 @@ export const useUserStore = defineStore('userStore', {
                         })
                 }
             })
-            // ListContent.sort((prev, next) => {
-            //     if (prev.completed_status < next.completed_status) return -1;
-            //     if (prev.completed_status < next.completed) return 1;
-            // })
         },
 
         setToDoList() {
@@ -67,6 +66,47 @@ export const useUserStore = defineStore('userStore', {
                 if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return -1;
                 if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return 1;
             })
-        }
+        },
+        async today_addTo_do_list(){
+            let checkEmit = true
+            this.toDoList.forEach(e => {
+                if(e.list_name == '')
+                checkEmit = false
+            })
+            
+            if(checkEmit == true){
+                await axios.post('http://localhost:8080/api/user/new-to-do-list', {
+                    "date_start": new Date().toLocaleDateString(),
+                    "list_name": "",
+                    "user_id": this.user[0].user_id,
+                    "completed_status_to_do_list": "no"
+                }).then(res => {
+                    if(res.status == 200){
+                        console.log(res);
+                        // временный вызов всех данных
+                        this.getUser(this.user[0].email, this.user[0].password)
+                    }
+                })
+            }
+            else{
+                return
+            } 
+            localStorage.setItem('user', JSON.stringify(this.user))
+        },
+        async today_updateTo_do_list(new_list_name, listItem){
+            console.log(listItem);
+            await axios.put('http://localhost:8080/api/user/new-to-do-list', {
+                "date_start": new Date().toLocaleDateString(),
+                "list_name": new_list_name, 
+                "user_id": this.user[0].user_id,
+                "to_do_list_id": listItem.to_do_list_id,
+                "completed_status_to_do_list": listItem.completed_status_to_do_list
+            })
+            this.sortList()
+            console.log(listItem);
+            // временный вызов всех данных
+            // this.getUser(this.user[0].email, this.user[0].password)
+            localStorage.setItem('user', JSON.stringify(this.user[0]))
+        } 
     }
 })

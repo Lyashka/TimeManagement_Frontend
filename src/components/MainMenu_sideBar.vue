@@ -1,6 +1,6 @@
 <template>
   <div class="MainMenu_sideBar">
-        <a class="sideBar_item" href="">Календарь</a>
+        <a class="sideBar_item" href="/my_calendar">Календарь</a>
         <a class="sideBar_item" href="">Цели</a>
   </div>
 </template>

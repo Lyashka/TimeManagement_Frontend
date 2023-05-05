@@ -2,7 +2,7 @@
     <div>
         <div class="container_main_item" >
             <button  @click="showContentBar" class="item_list" >
-                <input type="text" :value="value_list_name" class="main_item" :class="{'checked' : ischecked}">
+                <input type="text" v-model="value_list_name" class="main_item" :class="{'checked' : ischecked}" placeholder="Введите значение" @input="editTo_do_list()">
             </button>
             <input class="checkbox" type="checkbox" v-model="check_status" @click="set_check_status()">
         </div>
@@ -62,14 +62,18 @@ export default{
                         this.ischecked = true
             } 
             this.userStore.sortList()
+            this.userStore.today_updateTo_do_list(this.value_list_name, this.list)
+        },
+        editTo_do_list(){
+            console.log(this.value_list_name);
+            this.list.list_name = this.value_list_name
+            this.userStore.today_updateTo_do_list(this.value_list_name, this.list)
         }
     },
 
     setup() {
         const userStore = useUserStore();
-
         userStore.setToDoList()
-
         return{
             userStore
         }
@@ -129,7 +133,6 @@ export default{
     align-items: center;
 }
 .checked{
-    /* text-decoration: line-through; */
     color:rgba(0, 0, 0, 0.300);
 }
 
