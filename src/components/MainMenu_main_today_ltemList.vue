@@ -73,13 +73,19 @@ export default{
 
     setup() {
         const userStore = useUserStore();
-        userStore.setToDoList()
+        if(userStore.checkTodayOrMonth == true) {
+          console.log('dsdsd');
+          userStore.setToDoList()
+        }
+       
         return{
             userStore
         }
     },
  
     mounted() {
+      this.userStore.toDoList = JSON.parse(localStorage.getItem('toDoList'))
+      this.userStore.user = JSON.parse(localStorage.getItem('user'))
         if(this.list.completed_status_to_do_list == 'yes'){
             this.check_status = true
             this.ischecked = true

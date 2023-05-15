@@ -4,11 +4,6 @@
 
         </div>
         <MainMenu_header></MainMenu_header>
-
-        <Calendar_item>
-            
-        </Calendar_item>
-
         <FullCalendar class="calendar_container" v-bind:options="options">
             <template>
                 <div class="c">
@@ -20,6 +15,13 @@
                 <label class="title_item">{{ arg.event.title }}</label>
             </template>
         </FullCalendar>
+
+        <Calendar_item v-if="calendarItemShow" class="zindex_Calendar">
+            <button @click="closeCalendarItem">Click me</button>
+                <MainMenu_main_today_ltemList v-for="list of calendar_data_list" :key="list.to_do_list_id" :list="list">
+
+                </MainMenu_main_today_ltemList>
+        </Calendar_item>
     </div>
 </template>
 
@@ -34,7 +36,8 @@
 
         import MainMenu_header from '../components/MainMenu_header.vue'
         import MainMenu_main_container from '../components/MainMenu_main_container.vue'
-        import Calendar_item from '../components/calendar_item.vue'
+        import Calendar_item from '../components/Calendar_item.vue'
+        import MainMenu_main_today_ltemList from '../components/MainMenu_main_today_ltemList.vue'
 
         import ruLocale from '@fullcalendar/core/locales/ru.cjs'
         import {INITIAL_EVENTS, createEventId} from '../event-utils'
@@ -43,11 +46,13 @@
 
 export default{
     components: {
-        FullCalendar, MainMenu_header, MainMenu_main_container, Calendar_item
+        FullCalendar, MainMenu_header, MainMenu_main_container, Calendar_item, MainMenu_main_today_ltemList
     },
 
     data() {
         return {
+            calendarItemShow: false,
+            calendar_data_list: [],
             dataEvents: [],
             options:{
                 locale: ruLocale,
@@ -80,6 +85,7 @@ export default{
 
     setup() {
         const userStore = useUserStore();
+        console.log( userStore.checkTodayOrMonth );
         return{
             userStore
         }
@@ -87,28 +93,30 @@ export default{
 
     methods: {
         handleDateSelect(info) {
-           
-            console.log(info);
-            console.log(info.startStr);
-            // let title = prompt('Enter new title')
-            // let calendarApi = info.view.calendar
+           this.calendarItemShow = true
+           this.calendar_data_list = []
+           this.userStore.dayToDoList = []
+            console.log(this.userStore.user.to_do_list);
 
-            // calendarApi.unselect()
-
-            // if(title) {
-            //     calendarApi.addEvent({
-            //         id: createEventId(),
-            //         title,
-            //         start: info.startStr,
-            //         end: info.endStr,
-            //         allDay: info.allDay
-            //     })
-            // }
+                this.userStore.user.to_do_list.forEach(e => {
+                if(info.startStr == e.date_start.substr(0,10).replace(/(\d{2})-(\d{2})-(\d{4})/g,"$3-$2-$1")) {
+                    this.calendar_data_list.push(e)
+                    // console.log(e);
+                }
+            })
+            this.userStore.sortListDay(this.calendar_data_list)
+            console.log(this.userStore.dayToDoList);  
+            
+            // console.log(this.calendar_data_list);
         },
 
         handleEventClick(info) {
-            // console.log('this title');
-            // info.event.remove()
+            // this.calendarItemShow = true
+            // this.userStore.user.to_do_list.forEach(e => {
+            //     if(info.startStr == e.date_start.substr(0,10).replace(/(\d{2})-(\d{2})-(\d{4})/g,"$3-$2-$1")) {
+            //         console.log(e);
+            //     }
+            // })
         },
 
         handleEvents(events){
@@ -128,12 +136,17 @@ export default{
             // })
             // console.log(this.dataEvents);
 
+        },
+
+        closeCalendarItem() {
+            this.calendarItemShow = false
+            this.calendar_data_list = []
         }
     },
 
     mounted(){
-        this.userStore.toDoList = JSON.parse(localStorage.getItem('toDoList'))
         this.userStore.user = JSON.parse(localStorage.getItem('user'))
+        this.userStore.toDoList = JSON.parse(localStorage.getItem('toDoList'))
         this.userStore.user.to_do_list.forEach(e => {
             let newEvent = {
                 title: e.list_name,
@@ -142,7 +155,7 @@ export default{
             }
            this.dataEvents.push(newEvent)
         })
-
+        // this.dataEvents.sort
         // this.options.events.push( {
         //         title: "Event 6666",
         //         start: "2023-05-15"
@@ -162,11 +175,15 @@ export default{
     height: 55em;
     margin-left: auto;
     margin-right: auto;
+
+    z-index: 0;
 }
 .title_item{
     font-size: 18px;
     /* background-color: blueviolet; */
 }
 
-
+.zindex_Calendar{
+    z-index: 1;
+}
 </style>

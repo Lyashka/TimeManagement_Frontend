@@ -46,7 +46,7 @@ let dateOnNewDate = new Date().toLocaleDateString()
 
 <style scoped>
 .main_container{
-    height: 40em;
+    min-height: 40em;
     width: 60em;
     border: 1px solid black;
     margin-top: 1em;
