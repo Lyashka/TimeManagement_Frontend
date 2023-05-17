@@ -12,7 +12,7 @@
      
       {{ userStore.toDoList }}
     </MainMenu_main_container>
-    <MainMenu_edit_to_do_list></MainMenu_edit_to_do_list>
+    <To_do_list_Buttons></To_do_list_Buttons>
   </div>
 </template>
 
@@ -21,12 +21,12 @@ import MainMenu_header from '../components/MainMenu_header.vue';
 import MainMenu_sideBar from '../components/MainMenu_sideBar.vue';
 import MainMenu_main_container from '../components/MainMenu_main_container.vue';
 import MainMenu_main_today_ltemList from '../components/MainMenu_main_today_ltemList.vue';
-import MainMenu_edit_to_do_list from '../components/MainMenu_edit_to_do_list.vue';
+import To_do_list_Buttons from '../components/To_do_list_btns.vue';
 import { useUserStore } from '../stores/userStore';
 
 export default{
   components:{
-    MainMenu_header, MainMenu_sideBar, MainMenu_main_container, MainMenu_main_today_ltemList, MainMenu_edit_to_do_list, 
+    MainMenu_header, MainMenu_sideBar, MainMenu_main_container, MainMenu_main_today_ltemList, To_do_list_Buttons, 
   },
 
   data() { 

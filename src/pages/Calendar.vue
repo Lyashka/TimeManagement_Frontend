@@ -5,22 +5,24 @@
         </div>
         <MainMenu_header></MainMenu_header>
         <FullCalendar class="calendar_container" v-bind:options="options">
-            <template>
-                <div class="c">
-                    SSS
-                </div>
-            </template>
-            <!-- <MainMenu_main_container :events="events" ></MainMenu_main_container> -->
             <template v-slot:eventContent='arg'>
                 <label class="title_item">{{ arg.event.title }}</label>
             </template>
         </FullCalendar>
 
-        <Calendar_item v-if="calendarItemShow" class="zindex_Calendar">
-            <button @click="closeCalendarItem">Click me</button>
-                <MainMenu_main_today_ltemList v-for="list of calendar_data_list" :key="list.to_do_list_id" :list="list">
+        <Calendar_item v-if="calendarItemShow" class="zindex_calendar_item">
+            <!-- <div class="calendar_item"> -->
+                <div>
+                    <div class="top_bar_list_calendar">
+                        <To_do_list_btns_for_calendar></To_do_list_btns_for_calendar>
+                        <button @click="closeCalendarItem">Click me</button>
+                    </div>
+                    <MainMenu_main_today_ltemList v-for="list of calendar_data_list" :key="list.to_do_list_id" :list="list">
 
-                </MainMenu_main_today_ltemList>
+                    </MainMenu_main_today_ltemList>
+                 </div>
+                
+            <!-- </div> -->
         </Calendar_item>
     </div>
 </template>
@@ -38,6 +40,7 @@
         import MainMenu_main_container from '../components/MainMenu_main_container.vue'
         import Calendar_item from '../components/Calendar_item.vue'
         import MainMenu_main_today_ltemList from '../components/MainMenu_main_today_ltemList.vue'
+        import To_do_list_btns_for_calendar from '../components/To_do_list_btns_for_calendar.vue'
 
         import ruLocale from '@fullcalendar/core/locales/ru.cjs'
         import {INITIAL_EVENTS, createEventId} from '../event-utils'
@@ -46,14 +49,14 @@
 
 export default{
     components: {
-        FullCalendar, MainMenu_header, MainMenu_main_container, Calendar_item, MainMenu_main_today_ltemList
+        FullCalendar, MainMenu_header, MainMenu_main_container, Calendar_item, MainMenu_main_today_ltemList, To_do_list_btns_for_calendar
     },
 
     data() {
         return {
             calendarItemShow: false,
             calendar_data_list: [],
-            dataEvents: [],
+            // dataEvents: [],
             options:{
                 locale: ruLocale,
                 plugins:[dayGridPlugin, timeGridPlugin, interationPlugin],
@@ -75,9 +78,7 @@ export default{
                 eventClick: this.handleEventClick, 
                 eventsSet: this.handleEvents,
 
-                events: [
-                
-            ],
+                events: [],
             },
             
         }
@@ -93,10 +94,15 @@ export default{
 
     methods: {
         handleDateSelect(info) {
+
+            console.log(this.userStore.dayToDoList);
+           this.userStore.dayToDoListDate = info.startStr
+            
            this.calendarItemShow = true
            this.calendar_data_list = []
            this.userStore.dayToDoList = []
             console.log(this.userStore.user.to_do_list);
+            localStorage.getItem('user')
 
                 this.userStore.user.to_do_list.forEach(e => {
                 if(info.startStr == e.date_start.substr(0,10).replace(/(\d{2})-(\d{2})-(\d{4})/g,"$3-$2-$1")) {
@@ -111,31 +117,11 @@ export default{
         },
 
         handleEventClick(info) {
-            // this.calendarItemShow = true
-            // this.userStore.user.to_do_list.forEach(e => {
-            //     if(info.startStr == e.date_start.substr(0,10).replace(/(\d{2})-(\d{2})-(\d{4})/g,"$3-$2-$1")) {
-            //         console.log(e);
-            //     }
-            // })
+           
         },
 
         handleEvents(events){
-            this.options.events = this.dataEvents
-            // console.log(events);
-            // let newEvent = {
-            //     title: "Event 6666",
-            //     start: "2023-05-15"
-            //     }
-                // this.options.events.push(newEvent)
-            // console.log(events);
-
-            // this.dataEvents = events
-            // this.dataEvents.forEach(e => {
-            //     console.log(e._def.title);
-            //     console.log(e._instance.range.start);
-            // })
-            // console.log(this.dataEvents);
-
+            this.options.events = this.userStore.dataEvents
         },
 
         closeCalendarItem() {
@@ -153,7 +139,7 @@ export default{
                 start: e.date_start.substr(0,10).replace(/(\d{2})-(\d{2})-(\d{4})/g,"$3-$2-$1"),
                 // color: 'rgba(255, 251, 0, 0.153)'
             }
-           this.dataEvents.push(newEvent)
+            this.userStore.dataEvents.push(newEvent)
         })
         // this.dataEvents.sort
         // this.options.events.push( {
@@ -180,10 +166,19 @@ export default{
 }
 .title_item{
     font-size: 18px;
-    /* background-color: blueviolet; */
 }
-
-.zindex_Calendar{
+.zindex_calendar_item{
     z-index: 1;
+    
+}
+.calendar_item{
+   
+}
+.btn_bar_for_to_do_list_btn{
+    margin-right: 10px;   
+}
+.top_bar_list_calendar{
+display: flex;
+justify-content:space-between;
 }
 </style>

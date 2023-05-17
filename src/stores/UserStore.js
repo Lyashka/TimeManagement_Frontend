@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { async } from 'jshint/src/prod-params';
 import {defineStore} from 'pinia'
 
 export const useUserStore = defineStore('userStore', {
@@ -7,7 +6,13 @@ export const useUserStore = defineStore('userStore', {
         user: [],
         notFoundUser: '',
         toDoList: [],
+        dataEvents:[],
+
+        dayToDoListItem: {},
+        dayToDoListDate: '',
+        dayToDoListId: '',
         dayToDoList: [],
+
         checkTodayOrMonth: false,
     }),
 
@@ -28,6 +33,21 @@ export const useUserStore = defineStore('userStore', {
                     this.notFoundUser = ''
                     window.location.href = '/mainMenu'
                     localStorage.setItem('user', JSON.stringify(this.user))
+                } 
+            });
+        },
+
+        async repeatGetUser(email, password) {
+            console.log(email, password);
+            await axios.get(`http://localhost:8080/api/user?email=${email}&password=${password}`
+            ).then(res => { 
+                if(res.data == ''){
+                    }else{
+                    console.log(res.data)
+                    this.user = res.data
+                    this.notFoundUser = ''
+                    localStorage.setItem('user', JSON.stringify(this.user))
+                    this.user = JSON.parse(localStorage.getItem('user'))
                 } 
             });
         },
@@ -79,6 +99,7 @@ export const useUserStore = defineStore('userStore', {
                 if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return 1;
             })
         },
+
         async today_addTo_do_list(){
             let checkEmit = true
             this.toDoList.forEach(e => {
@@ -97,33 +118,118 @@ export const useUserStore = defineStore('userStore', {
                     if(res.status == 200){
                         console.log(res);
                         // временный вызов всех данных
-                        this.getUser(this.user.email, this.user.password)
+                        this.repeatGetUser(this.user.email, this.user.password)
                     }
+                    localStorage.setItem('user', JSON.stringify(this.user))
+                    this.user = JSON.parse(localStorage.getItem('user'))
                 })
             }
             else{
                 return
             } 
-            localStorage.setItem('user', JSON.stringify(this.user))
+           
         },
         async today_updateTo_do_list(new_list_name, listItem){
-            console.log(listItem);
+            // console.log(listItem);
             await axios.put('http://localhost:8080/api/user/new-to-do-list', {
                 "date_start": listItem.date_start,
                 "list_name": new_list_name, 
                 "user_id": this.user.user_id,
                 "to_do_list_id": listItem.to_do_list_id,
                 "completed_status_to_do_list": listItem.completed_status_to_do_list
+            }).then(res => {
+                console.log(res);
+                this.user.to_do_list.forEach(e => {
+                    if (e.to_do_list_id == listItem.to_do_list_id) {
+                        e.completed_status_to_do_list = listItem.completed_status_to_do_list
+                        e.list_name = listItem.list_name
+                    }
+                })
+                localStorage.setItem('user', JSON.stringify(this.user))
+                this.user = JSON.parse(localStorage.getItem('user'))
             })
-            // console.log(this.dayToDoList);
-            this.sortListDay(this.dayToDoList)
+        },
+        
 
-            this.user.to_do_list.forEach(e => {
-                if (e.to_do_list_id == listItem.to_do_list_id) {
-                    e.completed_status_to_do_list = listItem.completed_status_to_do_list
-                }
+
+
+
+
+
+
+
+
+        async addTo_do_list_on_calendar(){
+            // this.dayToDoListItem = {}
+            let checkEmit = true
+            // this.dayToDoList.forEach(e => {
+            //     if(e.list_name == '')
+            //     checkEmit = false
+            // })
+            // console.log(this.dayToDoList);
+            if(checkEmit == true){
+                console.log(this.user);
+                await axios.post('http://localhost:8080/api/user/new-to-do-list', {
+                    "date_start": this.dayToDoListDate,
+                    "list_name": "",
+                    "user_id": this.user.user_id,
+                    "completed_status_to_do_list": "no"
+                }).then(res => {
+                    if(res.status == 200){
+                        console.log(res);
+
+               
+
+                    this.repeatGetUser(this.user.email, this.user.password)
+                    }
+                    localStorage.setItem('user', JSON.stringify(this.user))
+                    this.user = JSON.parse(localStorage.getItem('user'))
+
+                    console.log(this.user.to_do_list [this.user.to_do_list.length - 1]); 
+                    this.dayToDoListItem = this.user.to_do_list[this.user.to_do_list.length - 1] 
+                    this.updateTo_do_list_on_calendar(this.dayToDoListItem.list_name)
+                })
+                this.dayToDoList.push({
+                    "to_do_list_id": this.dayToDoListItem.to_do_list_id,
+                    "date_start": this.dayToDoListDate,
+                    "list_name": "",
+                    "user_id": this.user.user_id,
+                    "completed_status_to_do_list": "no",
+                   
+                })  
+                
+            }
+            else{
+                return
+            } 
+           
+        },
+        async updateTo_do_list_on_calendar(new_list_name){
+            let listItem = this.user.to_do_list[this.user.to_do_list.length - 1]
+            await axios.put('http://localhost:8080/api/user/new-to-do-list', {
+                "date_start": listItem.date_start,
+                "list_name": new_list_name, 
+                "user_id": this.user.user_id,
+                "to_do_list_id": listItem.to_do_list_id,
+                "completed_status_to_do_list": listItem.completed_status_to_do_list
+            }).then(res => {
+                console.log(res);
+                this.user.to_do_list.forEach(e => {
+                    if (e.to_do_list_id == listItem.to_do_list_id) {
+                        e.completed_status_to_do_list = listItem.completed_status_to_do_list
+                        e.list_name = listItem.list_name
+                    }
+                })
+                this.repeatGetUser(this.user.email, this.user.password)
+                localStorage.setItem('user', JSON.stringify(this.user))
+                this.user = JSON.parse(localStorage.getItem('user'))
             })
-            localStorage.setItem('user', JSON.stringify(this.user))
-        } 
+
+            this.dataEvents.push({
+                'title': new_list_name,
+                'start': this.dayToDoListDate
+            })
+            this.dayToDoListItem.list_name = ''
+        },
     }
 })
