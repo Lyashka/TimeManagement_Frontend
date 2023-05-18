@@ -1,8 +1,6 @@
 <template>
     <div class="btn_container">
         <button class="btn_element" @click="add_to_do_list()">Add In calendar</button>
-        <button>edit</button>
-        <button>Save</button>
     </div>
 </template>
 

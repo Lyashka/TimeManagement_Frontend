@@ -17,7 +17,7 @@
                         <To_do_list_btns_for_calendar></To_do_list_btns_for_calendar>
                         <button @click="closeCalendarItem">Click me</button>
                     </div>
-                    <MainMenu_main_today_ltemList v-for="list of calendar_data_list" :key="list.to_do_list_id" :list="list">
+                    <MainMenu_main_today_ltemList v-for="list of this.userStore.calendar_data_list" :key="list.to_do_list_id" :list="list">
 
                     </MainMenu_main_today_ltemList>
                  </div>
@@ -55,7 +55,7 @@ export default{
     data() {
         return {
             calendarItemShow: false,
-            calendar_data_list: [],
+            // calendar_data_list: [],
             // dataEvents: [],
             options:{
                 locale: ruLocale,
@@ -94,24 +94,24 @@ export default{
 
     methods: {
         handleDateSelect(info) {
-
+            console.log(this.options.events);
             console.log(this.userStore.dayToDoList);
            this.userStore.dayToDoListDate = info.startStr
             
            this.calendarItemShow = true
-           this.calendar_data_list = []
+           this.userStore.calendar_data_list = []
            this.userStore.dayToDoList = []
             console.log(this.userStore.user.to_do_list);
             localStorage.getItem('user')
 
                 this.userStore.user.to_do_list.forEach(e => {
                 if(info.startStr == e.date_start.substr(0,10).replace(/(\d{2})-(\d{2})-(\d{4})/g,"$3-$2-$1")) {
-                    this.calendar_data_list.push(e)
+                    this.userStore.calendar_data_list.push(e)
                     // console.log(e);
                 }
             })
-            this.userStore.sortListDay(this.calendar_data_list)
-            console.log(this.userStore.dayToDoList);  
+            this.userStore.sortListDay(this.userStore.calendar_data_list)
+            console.log(this.userStore.calendar_data_list);  
             
             // console.log(this.calendar_data_list);
         },
@@ -126,7 +126,7 @@ export default{
 
         closeCalendarItem() {
             this.calendarItemShow = false
-            this.calendar_data_list = []
+            this.userStore.calendar_data_list = []
         }
     },
 
@@ -135,6 +135,7 @@ export default{
         this.userStore.toDoList = JSON.parse(localStorage.getItem('toDoList'))
         this.userStore.user.to_do_list.forEach(e => {
             let newEvent = {
+                id: e.to_do_list_id,
                 title: e.list_name,
                 start: e.date_start.substr(0,10).replace(/(\d{2})-(\d{2})-(\d{4})/g,"$3-$2-$1"),
                 // color: 'rgba(255, 251, 0, 0.153)'

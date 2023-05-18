@@ -2,7 +2,8 @@
     <div>
         <div class="container_main_item" >
             <button  @click="showContentBar" class="item_list" >
-                <input type="text" v-model="value_list_name" class="main_item" :class="{'checked' : ischecked}" placeholder="Введите значение" @click="editTo_do_list()">
+                <input type="text" v-model="value_list_name" class="main_item" :class="{'checked' : ischecked}" placeholder="Введите значение">
+                <button @click="saveItemList(this.value_list_name)">save</button>
             </button>
             <input class="checkbox" type="checkbox" v-model="check_status" @click="set_check_status()">
         </div>
@@ -41,6 +42,18 @@ export default{
     },
 
     methods: {
+
+      saveItemList(value_list_name) {            
+            this.list.list_name = this.value_list_name
+            this.userStore.dayToDoListItem = this.list
+
+            // if(this.userStore.checkTodayOrMonth == true) {
+            //   this.userStore.today_updateTo_do_list(value_list_name, this.list)
+            // }
+            // else{
+              this.userStore.updateTo_do_list_on_calendar(value_list_name)
+            // }
+      },
       
         // showContentBar(){
         //     this.showContent = !this.showContent
@@ -78,23 +91,25 @@ export default{
             
             this.list.list_name = this.value_list_name
 
+
             this.userStore.dayToDoListItem = this.list
+
             console.log(this.userStore.dayToDoListItem);
             if(this.userStore.checkTodayOrMonth == true) {
-              this.userStore.today_updateTo_do_list(this.value_list_name, this.list)
+              this.userStore.today_updateTo_do_list(this.list.list_name, this.list)
             }
             else{
-              this.userStore.updateTo_do_list_on_calendar(this.value_list_name)
+              this.userStore.updateTo_do_list_on_calendar(this.list.list_name)
             }
         }
     },
 
     setup() {
         const userStore = useUserStore();
-        if(userStore.checkTodayOrMonth == true) {
-          console.log('dsdsd');
-          userStore.setToDoList()
-        }
+        // if(userStore.checkTodayOrMonth == true) {
+        //   console.log('dsdsd');
+        //   userStore.setToDoList()
+        // }
        
         return{
             userStore
@@ -129,10 +144,11 @@ export default{
   width: 100%;
   display: flex;
   font-size: xx-large;
-  flex-direction: column;
+  flex-direction: row;
   border: none;
   background: none;
   padding-left: 5px; 
+  align-items: center;
 } 
 .content_item{
   margin-left: 30px;

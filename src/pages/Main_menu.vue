@@ -4,7 +4,7 @@
     <MainMenu_sideBar></MainMenu_sideBar>
     <MainMenu_main_container>
       <transition-group name="itemList" tag="">
-        <MainMenu_main_today_ltemList  v-for="list of userStore.toDoList" :list="list" :key="list.to_do_list_id">
+        <MainMenu_main_today_ltemList  v-for="list of this.userStore.calendar_data_list" :list="list" :key="list.to_do_list_id">
 
         </MainMenu_main_today_ltemList>
       </transition-group>
@@ -45,12 +45,14 @@ export default{
   setup() {
     const userStore = useUserStore();
     userStore.user = JSON.parse(localStorage.getItem('user'))
-    userStore.toDoList = JSON.parse(localStorage.getItem('toDoList'))
+    // userStore.calendar_data_list = JSON.parse(localStorage.getItem('toDoList'))
       userStore.setToDoList()
-      userStore.sortToDoList(userStore.toDoList)
+      // userStore.sortToDoList(userStore.calendar_data_list)
       userStore.checkTodayOrMonth = true
       console.log( userStore.checkTodayOrMonth );
+      userStore.dayToDoListDate = new Date().toLocaleDateString()
 
+      userStore.calendar_data_list = userStore.dayToDoList
       // userStore.getUser(userStore.user[0].email, userStore.user[0].password)
 
     return{

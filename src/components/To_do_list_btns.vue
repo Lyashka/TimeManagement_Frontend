@@ -14,7 +14,7 @@ export default {
     },
     methods: {
         add_to_do_list(){
-            this.userStore.today_addTo_do_list()
+            this.userStore.addTo_do_list_on_calendar()
         }
     },
     setup() {
