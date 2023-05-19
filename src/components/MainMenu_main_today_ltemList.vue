@@ -4,8 +4,9 @@
             <button  @click="showContentBar" class="item_list" >
                 <input type="text" v-model="value_list_name" class="main_item" :class="{'checked' : ischecked}" placeholder="Введите значение">
                 <button @click="saveItemList(this.value_list_name)">save</button>
+                <button @click="deleteItemList(this.value_list_name)">Del</button>
             </button>
-            <input class="checkbox" type="checkbox" v-model="check_status" @click="set_check_status()">
+            <input class="checkbox" type="checkbox" v-model="check_status" @click="set_check_status(this.value_list_name)">
         </div>
         
         <div class="container_for_content">
@@ -46,13 +47,15 @@ export default{
       saveItemList(value_list_name) {            
             this.list.list_name = this.value_list_name
             this.userStore.dayToDoListItem = this.list
+            this.userStore.dayToDoListItem.to_do_list_id = this.userStore.dayToDoListItem.to_do_list_id - 1
 
-            // if(this.userStore.checkTodayOrMonth == true) {
-            //   this.userStore.today_updateTo_do_list(value_list_name, this.list)
-            // }
-            // else{
+            console.log('LISTTTITITIITI');
+            console.log(this.list);
+
               this.userStore.updateTo_do_list_on_calendar(value_list_name)
-            // }
+      },
+      deleteItemList(){
+        this.userStore.removeTo_do_list_on_calendar(this.list)
       },
       
         // showContentBar(){
@@ -63,7 +66,7 @@ export default{
         //     }) 
         // },
 
-        set_check_status() {
+        set_check_status(value_list_name) {
             console.log(this.list.completed_status_to_do_list);
             console.log(this.list);
              
@@ -77,17 +80,19 @@ export default{
             } 
             this.userStore.sortList()
 
-            if(this.userStore.checkTodayOrMonth == true) {
-              this.userStore.today_updateTo_do_list(this.value_list_name, this.list)
-            }
-            else{
-              this.userStore.updateTo_do_list_on_calendar(this.value_list_name)
-            }
+            // if(this.userStore.checkTodayOrMonth == true) {
+              // this.userStore.today_updateTo_do_list(this.value_list_name, this.list)
+            // }
+            // else{
+              this.list.list_name = this.value_list_name
+            this.userStore.dayToDoListItem = this.list
+              this.userStore.updateTo_do_list_on_calendar(value_list_name)
+            // }
 
           
         },
         editTo_do_list(){
-            console.log(this.list);
+          
             
             this.list.list_name = this.value_list_name
 

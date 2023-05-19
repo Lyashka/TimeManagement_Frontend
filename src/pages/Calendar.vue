@@ -78,6 +78,7 @@ export default{
                 eventClick: this.handleEventClick, 
                 eventsSet: this.handleEvents,
 
+
                 events: [],
             },
             
@@ -117,15 +118,16 @@ export default{
         },
 
         handleEventClick(info) {
-           
+            console.log(info);
         },
 
-        handleEvents(events){
+        handleEvents(){
             this.options.events = this.userStore.dataEvents
         },
 
         closeCalendarItem() {
             this.calendarItemShow = false
+            this.handleEvents()
             this.userStore.calendar_data_list = []
         }
     },

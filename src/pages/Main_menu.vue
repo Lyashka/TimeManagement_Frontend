@@ -8,9 +8,6 @@
 
         </MainMenu_main_today_ltemList>
       </transition-group>
-     
-     
-      {{ userStore.toDoList }}
     </MainMenu_main_container>
     <To_do_list_Buttons></To_do_list_Buttons>
   </div>
@@ -45,6 +42,7 @@ export default{
   setup() {
     const userStore = useUserStore();
     userStore.user = JSON.parse(localStorage.getItem('user'))
+    
     // userStore.calendar_data_list = JSON.parse(localStorage.getItem('toDoList'))
       userStore.setToDoList()
       // userStore.sortToDoList(userStore.calendar_data_list)
