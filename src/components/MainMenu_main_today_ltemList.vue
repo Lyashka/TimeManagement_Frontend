@@ -10,11 +10,11 @@
         </div>
         
         <div class="container_for_content">
-            <transition-group name="itemContent" tag="div">
+            <!-- <transition-group name="itemContent" tag="div"> -->
                 <MainMenu_main_today_itemContent v-for="content of list.content" :key="content.id" v-show="showContent" :content="content" class="content_item">
 
                 </MainMenu_main_today_itemContent>
-            </transition-group>
+            <!-- </transition-group> -->
         </div>
     </div>
 </template>
@@ -47,13 +47,13 @@ export default{
       saveItemList(value_list_name) {            
             this.list.list_name = this.value_list_name
             this.userStore.dayToDoListItem = this.list
-            this.userStore.dayToDoListItem.to_do_list_id = this.userStore.dayToDoListItem.to_do_list_id - 1
 
-            console.log('LISTTTITITIITI');
-            console.log(this.list);
+  
+            console.log(this.userStore.checkEmtyToDoList);
 
-              this.userStore.updateTo_do_list_on_calendar(value_list_name)
+            this.userStore.updateTo_do_list_on_calendar(value_list_name)
       },
+
       deleteItemList(){
         this.userStore.removeTo_do_list_on_calendar(this.list)
       },

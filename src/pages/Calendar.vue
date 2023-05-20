@@ -95,6 +95,7 @@ export default{
 
     methods: {
         handleDateSelect(info) {
+            console.log(info.startStr);
             console.log(this.options.events);
             console.log(this.userStore.dayToDoList);
            this.userStore.dayToDoListDate = info.startStr
@@ -102,17 +103,19 @@ export default{
            this.calendarItemShow = true
            this.userStore.calendar_data_list = []
            this.userStore.dayToDoList = []
-            console.log(this.userStore.user.to_do_list);
-            localStorage.getItem('user')
-
+            // console.log(this.userStore.user.to_do_list);
+           this.userStore.user = JSON.parse(localStorage.getItem('user'))
+   
                 this.userStore.user.to_do_list.forEach(e => {
                 if(info.startStr == e.date_start.substr(0,10).replace(/(\d{2})-(\d{2})-(\d{4})/g,"$3-$2-$1")) {
                     this.userStore.calendar_data_list.push(e)
-                    // console.log(e);
                 }
             })
-            this.userStore.sortListDay(this.userStore.calendar_data_list)
-            console.log(this.userStore.calendar_data_list);  
+            // console.log(this.userStore.dayToDoList);
+            //this.userStore.calendar_data_list
+            // console.log(this.userStore.dataEvents);
+            // this.userStore.sortListDay(this.userStore.calendar_data_list)
+            // console.log(this.userStore.calendar_data_list);  
             
             // console.log(this.calendar_data_list);
         },
@@ -144,6 +147,7 @@ export default{
             }
             this.userStore.dataEvents.push(newEvent)
         })
+        console.log(this.userStore.dataEvents);
         // this.dataEvents.sort
         // this.options.events.push( {
         //         title: "Event 6666",

@@ -9,7 +9,6 @@ export const useUserStore = defineStore('userStore', {
         toDoList: [],
         dataEvents:[],
 
-
         calendar_data_list:[],
 
         dayToDoListItem: {},
@@ -83,20 +82,49 @@ export const useUserStore = defineStore('userStore', {
             })
         },
 
-        setToDoList() {
+       async setToDoList() {
             this.user = JSON.parse(localStorage.getItem('user'))
-            this.dayToDoList = []
+            await this.repeatGetUser(this.user.email, this.user.password);
+            this.calendar_data_list = []
             this.user.to_do_list.forEach(item => {
-                if (item.date_start.substr(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3.$2.$1") === new Date().toLocaleDateString()) {
-                    console.log(true);
-                    this.dayToDoList.push(item)
+
+                console.log(item.date_start.substr(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3-$2-$1"));
+                console.log(this.dayToDoListDate.replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3-$2-$1"));
+                
+
+                if (item.date_start.substr(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3.$2.$1") === this.dayToDoListDate.replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3.$2.$1")) {
+                    console.log(item);    
+                    this.calendar_data_list.push(item)
                 }
               });
               console.log('F');
-              console.log(this.dayToDoList);
-              
+              console.log(this.calendar_data_list);
               localStorage.setItem('toDoList', JSON.stringify(this.calendar_data_list))
         },
+
+
+
+
+        // setToDoListOnCalendar() {
+        //     console.log(this.dayToDoListDate);
+
+        //     this.user = JSON.parse(localStorage.getItem('user'))
+        //     this.calendar_data_list = []
+        //     this.user.to_do_list.forEach(item => {
+        //         if (item.date_start.substr(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3.$2.$1") === this.dayToDoListDate) {
+        //             console.log(true);
+        //             this.calendar_data_list.push(item)
+        //         }
+        //       });
+        //       console.log('F');
+        //       console.log(this.calendar_data_list);
+        //       localStorage.setItem('toDoList', JSON.stringify(this.calendar_data_list))
+        // },
+
+
+
+
+
         sortList(){
             this.toDoList.sort((prev, next) => {
                 if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return -1;
@@ -105,11 +133,14 @@ export const useUserStore = defineStore('userStore', {
         },
         
         async addTo_do_list_on_calendar(){
+            if(this.user.to_do_list = []){
+                this.checkEmtyToDoList = true
+            }
 
             this.checkStatusAddNewToDoList = true
             this.dayToDoListItem = {}
             let checkEmit = true
-            console.log(this.dayToDoListDate);
+            // console.log(this.dayToDoListDate);
 
             this.calendar_data_list.forEach(e => {
                 if(e.list_name == '')
@@ -127,8 +158,8 @@ export const useUserStore = defineStore('userStore', {
                 await this.repeatGetUser(this.user.email, this.user.password);
 
                 if(this.user.to_do_list !== []){
-                    console.log('SUKA');
-                    console.log(this.user.to_do_list);
+                    // console.log('SUKA');
+                    // console.log(this.user.to_do_list);
                     // console.log(true);
                     // console.log(this.user.to_do_list[this.user.to_do_list.length - 1].to_do_list_id);
                     this.calendar_data_list.push({
@@ -140,8 +171,8 @@ export const useUserStore = defineStore('userStore', {
                     })
                 }
                 else{
-                    console.log('pidoro');
-                    console.log(this.user.to_do_list[0]);
+                    // console.log('pidoro');
+                    // console.log(this.user.to_do_list[0]);
 
                     // console.log(this.user.to_do_list[this.user.to_do_list.length - 1].to_do_list_id + 1);
                     // this.calendar_data_list.push({
@@ -153,7 +184,7 @@ export const useUserStore = defineStore('userStore', {
                     // })
                 }
                     await this.repeatGetUser(this.user.email, this.user.password);
-                
+                   
 
                 }
 
@@ -161,7 +192,10 @@ export const useUserStore = defineStore('userStore', {
                     this.setToDoList()
         },
         async updateTo_do_list_on_calendar(value_list_name){
-            console.log(this.dayToDoListItem);
+          
+            console.log(this.calendar_data_list);
+            // console.log('start update lists');
+            // console.log(this.dayToDoListItem);
 
 
             await axios.put('http://localhost:8080/api/user/new-to-do-list', {
@@ -173,6 +207,8 @@ export const useUserStore = defineStore('userStore', {
             }).then(res => {
                
             })
+            await this.repeatGetUser(this.user.email, this.user.password)
+            this.setToDoList()
             if (this.checkStatusAddNewToDoList == true) {
                 this.dataEvents.push({
                     'id': this.dayToDoListItem.to_do_list_id,
@@ -185,9 +221,9 @@ export const useUserStore = defineStore('userStore', {
                 this.dataEvents.forEach(e => {
                     if (e.id == this.dayToDoListItem.to_do_list_id) {
                         e.title = value_list_name
-                        console.log(value_list_name);
-                        console.log(e);
-                        console.log(this.user);
+                        // console.log(value_list_name);
+                        // console.log(e);
+                        // console.log(this.user);
                     }
                 })
 

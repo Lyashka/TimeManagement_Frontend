@@ -3,11 +3,11 @@
   <div class="mainMenu_container">
     <MainMenu_sideBar></MainMenu_sideBar>
     <MainMenu_main_container>
-      <transition-group name="itemList" tag="">
-        <MainMenu_main_today_ltemList  v-for="list of this.userStore.calendar_data_list" :list="list" :key="list.to_do_list_id">
+      <!-- <transition-group name="itemList" tag=""> -->
+        <MainMenu_main_today_ltemList  v-for="list of this.userStore.calendar_data_list" :key="list.to_do_list_id" :list="list">
 
         </MainMenu_main_today_ltemList>
-      </transition-group>
+      <!-- </transition-group> -->
     </MainMenu_main_container>
     <To_do_list_Buttons></To_do_list_Buttons>
   </div>
@@ -39,18 +39,22 @@ export default{
     },
   },
 
+  mounted() {
+  },
+
   setup() {
     const userStore = useUserStore();
     userStore.user = JSON.parse(localStorage.getItem('user'))
-    
-    // userStore.calendar_data_list = JSON.parse(localStorage.getItem('toDoList'))
-      userStore.setToDoList()
-      // userStore.sortToDoList(userStore.calendar_data_list)
-      userStore.checkTodayOrMonth = true
-      console.log( userStore.checkTodayOrMonth );
-      userStore.dayToDoListDate = new Date().toLocaleDateString()
+    console.log(userStore.user);
+    userStore.setToDoList()
 
-      userStore.calendar_data_list = userStore.dayToDoList
+    userStore.checkTodayOrMonth = true
+    console.log( userStore.checkTodayOrMonth );
+    userStore.dayToDoListDate = new Date().toLocaleDateString()
+      // console.log(userStore.dayToDoListDate);
+
+      
+      // userStore.calendar_data_list = userStore.dayToDoList
       // userStore.getUser(userStore.user[0].email, userStore.user[0].password)
 
     return{
