@@ -15,19 +15,21 @@ export default {
 .MainMenu_sideBar{
     height: 30em;
     width: 15em;
-    border-right: 1px solid rgba(0, 0, 0, 0.200);
+    /* border-right: 1px solid rgba(0, 0, 0, 0.200); */
     display: flex;
     flex-direction: column;
     padding-top: 1em;
+    
 }
 .sideBar_item{
     text-decoration: none;
     height: 2em;
     font-size: x-large;
-    padding-left: 0.5em;
+    padding-left: 2.5em;
     display: flex;
     align-items: center;
     color: black;
+    border-radius: 5px;
 
 }
 .sideBar_item:hover{

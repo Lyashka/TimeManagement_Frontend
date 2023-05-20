@@ -48,10 +48,11 @@ let dateOnNewDate = new Date().toLocaleDateString()
 .main_container{
     min-height: 40em;
     width: 60em;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin-top: 1em;
     margin-left: 1em;
     border-radius: 30px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 .date_container{
   height: 40px;

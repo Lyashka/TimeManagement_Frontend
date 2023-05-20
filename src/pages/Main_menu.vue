@@ -10,6 +10,7 @@
       <!-- </transition-group> -->
     </MainMenu_main_container>
     <To_do_list_Buttons></To_do_list_Buttons>
+    <Analytics_container></Analytics_container>
   </div>
 </template>
 
@@ -19,11 +20,13 @@ import MainMenu_sideBar from '../components/MainMenu_sideBar.vue';
 import MainMenu_main_container from '../components/MainMenu_main_container.vue';
 import MainMenu_main_today_ltemList from '../components/MainMenu_main_today_ltemList.vue';
 import To_do_list_Buttons from '../components/To_do_list_btns.vue';
+import Analytics_container from '../components/Analytics_container.vue';
+
 import { useUserStore } from '../stores/userStore';
 
 export default{
   components:{
-    MainMenu_header, MainMenu_sideBar, MainMenu_main_container, MainMenu_main_today_ltemList, To_do_list_Buttons, 
+    MainMenu_header, MainMenu_sideBar, MainMenu_main_container, MainMenu_main_today_ltemList, To_do_list_Buttons, Analytics_container
   },
 
   data() { 

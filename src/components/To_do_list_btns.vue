@@ -1,15 +1,17 @@
 <template>
     <div class="btn_container">
-        <button class="btn_element" @click="add_to_do_list()">Add</button>
+        <button class="btn_element" @click="add_to_do_list()"><img :src="plus" alt=""/></button>
     </div>
 </template>
 
 <script>
+import plus from '../icons/plus.svg'
 import { useUserStore } from '../stores/userStore';
 export default {
+
     data() {
         return {
-            
+            plus:plus
         }
     },
     methods: {
@@ -38,5 +40,11 @@ export default {
     margin-top: 1em;
     height: 50px;
     width: 50px;
+    background: none;
+    border-radius: 15px;
+    background-color: rgba(255, 251, 0, 0.153);
+}
+.btn_element:hover{ 
+    background-color: #fff;
 }
 </style>
