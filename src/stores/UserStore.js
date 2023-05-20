@@ -54,10 +54,11 @@ export const useUserStore = defineStore('userStore', {
                     console.log(this.user);
                 } 
             });
+            await this.sortListDay(this.calendar_data_list)
         },
 
         sortListDay(calendar_data_list){
-            this.dayToDoList = calendar_data_list.sort((prev, next) => {
+            this.calendar_data_list = calendar_data_list.sort((prev, next) => {
                 if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return -1;
                 if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return 1;
             })
@@ -100,26 +101,11 @@ export const useUserStore = defineStore('userStore', {
               console.log('F');
               console.log(this.calendar_data_list);
               localStorage.setItem('toDoList', JSON.stringify(this.calendar_data_list))
+              await this.sortListDay(this.calendar_data_list)
         },
 
 
 
-
-        // setToDoListOnCalendar() {
-        //     console.log(this.dayToDoListDate);
-
-        //     this.user = JSON.parse(localStorage.getItem('user'))
-        //     this.calendar_data_list = []
-        //     this.user.to_do_list.forEach(item => {
-        //         if (item.date_start.substr(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3.$2.$1") === this.dayToDoListDate) {
-        //             console.log(true);
-        //             this.calendar_data_list.push(item)
-        //         }
-        //       });
-        //       console.log('F');
-        //       console.log(this.calendar_data_list);
-        //       localStorage.setItem('toDoList', JSON.stringify(this.calendar_data_list))
-        // },
 
 
 
@@ -190,6 +176,7 @@ export const useUserStore = defineStore('userStore', {
 
 
                     this.setToDoList()
+                    await this.sortListDay(this.calendar_data_list)
         },
         async updateTo_do_list_on_calendar(value_list_name){
           
@@ -237,6 +224,8 @@ export const useUserStore = defineStore('userStore', {
             }
             this.repeatGetUser(this.user.email, this.user.password)
             this.checkStatusAddNewToDoList = false
+            
+           
         },
 
 
