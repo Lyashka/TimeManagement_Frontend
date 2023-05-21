@@ -18,6 +18,8 @@ export const useUserStore = defineStore('userStore', {
 
         checkTodayOrMonth: false,
         checkStatusAddNewToDoList: false,
+
+        purpose_array: []
     }),
 
     getters: {
@@ -58,11 +60,20 @@ export const useUserStore = defineStore('userStore', {
         },
 
         sortListDay(calendar_data_list){
+            this.sortListDay_onId(calendar_data_list)
             this.calendar_data_list = calendar_data_list.sort((prev, next) => {
                 if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return -1;
                 if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return 1;
             })
         },
+        sortListDay_onId(calendar_data_list){
+            this.calendar_data_list = calendar_data_list.sort((prev, next) => {
+                if (prev.to_do_list_id < next.to_do_list_id) return -1;
+                if (prev.to_do_list_id < next.to_do_list_id) return 1;
+            })
+        },
+
+
 
         sortToDoList(today_User_toDoList){ 
             this.toDoList = today_User_toDoList.sort((prev, next) => {
@@ -111,12 +122,12 @@ export const useUserStore = defineStore('userStore', {
 
 
 
-        sortList(){
-            this.toDoList.sort((prev, next) => {
-                if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return -1;
-                if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return 1;
-            })
-        },
+        // sortList(){
+        //     this.toDoList.sort((prev, next) => {
+        //         if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return -1;
+        //         if (prev.completed_status_to_do_list < next.completed_status_to_do_list) return 1;
+        //     })
+        // },
         
         async addTo_do_list_on_calendar(){
             if(this.user.to_do_list = []){
@@ -126,7 +137,6 @@ export const useUserStore = defineStore('userStore', {
             this.checkStatusAddNewToDoList = true
             this.dayToDoListItem = {}
             let checkEmit = true
-            // console.log(this.dayToDoListDate);
 
             this.calendar_data_list.forEach(e => {
                 if(e.list_name == '')
@@ -144,10 +154,6 @@ export const useUserStore = defineStore('userStore', {
                 await this.repeatGetUser(this.user.email, this.user.password);
 
                 if(this.user.to_do_list !== []){
-                    // console.log('SUKA');
-                    // console.log(this.user.to_do_list);
-                    // console.log(true);
-                    // console.log(this.user.to_do_list[this.user.to_do_list.length - 1].to_do_list_id);
                     this.calendar_data_list.push({
                         "to_do_list_id": this.user.to_do_list[this.user.to_do_list.length - 1].to_do_list_id + 1,
                         "date_start": this.dayToDoListDate,
@@ -155,19 +161,6 @@ export const useUserStore = defineStore('userStore', {
                         "user_id": this.user.user_id,
                         "completed_status_to_do_list": "no",
                     })
-                }
-                else{
-                    // console.log('pidoro');
-                    // console.log(this.user.to_do_list[0]);
-
-                    // console.log(this.user.to_do_list[this.user.to_do_list.length - 1].to_do_list_id + 1);
-                    // this.calendar_data_list.push({
-                    //     "to_do_list_id": this.user.to_do_list[this.user.to_do_list.length - 1].to_do_list_id + 1,
-                    //     "date_start": this.dayToDoListDate,
-                    //     "list_name": "",
-                    //     "user_id": this.user.user_id,
-                    //     "completed_status_to_do_list": "no",
-                    // })
                 }
                     await this.repeatGetUser(this.user.email, this.user.password);
                    
@@ -246,6 +239,75 @@ export const useUserStore = defineStore('userStore', {
             this.dataEvents = this.dataEvents.filter((item) => item.id !== list.to_do_list_id)
             console.log(this.dataEvents.length);
             this.repeatGetUser(this.user.email, this.user.password)
+        },
+
+
+
+
+
+        async sortPurpose() {
+            this.sortPurpose_onId()
+            this.purpose_array.sort((prev, next) => {
+                if (prev.completed_status < next.completed_status) return -1;
+                if (prev.completed_status < next.completed_status) return 1;
+            })
+        },
+        sortPurpose_onId(){
+            this.purpose_array.sort((prev, next) => {
+                if (prev.purp_id < next.purp_id) return -1;
+                if (prev.purp_id < next.purp_id) return 1;
+            })
+        },
+
+        async getPurpose() {
+            await axios.get(`http://localhost:8080/api/user/purpose/${this.user.user_id}`)
+            .then(res => {
+                this.purpose_array = res.data
+                console.log(res.data);
+            })
+            await this.sortPurpose()
+        },
+
+        async createPurpose() {
+            let checkEmit = false
+            this.purpose_array.forEach(e => {
+                if(e.purp_name == '') {
+                    checkEmit = true
+                }
+            })
+
+            if(checkEmit == false){
+                await axios.post(`http://localhost:8080/api/user/purpose`, {
+                    "purp_name": "",
+                    "date_create": new Date().toLocaleDateString(),
+                    "completed_status": "no",
+                    "date_completed": new Date().toLocaleDateString(),
+                    "user_id": this.user.user_id
+                }).then(res => {
+                    console.log(res); 
+                })
+                await this.getPurpose()
+            }
+            
+        },
+
+        async updatePurpose(item) {
+            await axios.put(`http://localhost:8080/api/user/purpose`,{
+                "purp_name": item.purp_name,
+                "date_create": item.date_create.replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3-$2-$1"),
+                "completed_status": item.completed_status,
+                "date_completed": item.date_completed.replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3-$2-$1"),
+                "purp_id": item.purp_id
+            })
+            await this.getPurpose()
+        },
+
+        async deletePurpose(item) {
+            await axios.delete(`http://localhost:8080/api/user/purpose/${item.purp_id}`)
+            .then(res => {
+                console.log(res);
+            })
+            await this.getPurpose()
         }
     }
 })

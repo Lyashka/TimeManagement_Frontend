@@ -3,6 +3,7 @@ import Auth from '../pages/Auth.vue'
 import Reg from '../pages/Reg.vue'
 import Main_menu from '../pages/Main_menu.vue'
 import Calendar from '../pages/Calendar.vue'
+import Purposes from '../pages/Purposes.vue'
 
 
 const router = createRouter({
@@ -27,6 +28,11 @@ const router = createRouter({
             path: '/my_calendar',
             name: 'My_calendar',
             component: Calendar
+        },
+        {
+            path: '/purpose',
+            name: 'purpose',
+            component: Purposes
         }
     ]
 })

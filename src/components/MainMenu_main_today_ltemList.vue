@@ -2,9 +2,13 @@
     <div>
         <div class="container_main_item" >
             <button  @click="showContentBar" class="item_list" >
-                <input type="text" v-model="value_list_name" class="main_item" :class="{'checked' : ischecked}" placeholder="Введите значение">
-                <button @click="saveItemList(this.value_list_name)">save</button>
-                <button @click="deleteItemList(this.value_list_name)">Del</button>
+                <input  type="text" v-model="value_list_name" class="main_item" :class="{'checked' : ischecked}" placeholder="Введите значение" :disabled="disabled">
+                <div class="container_undisabled_btn" v-if="disabled == false">
+                  <button class="btn_options" @click="saveItemList(this.value_list_name)"><img :src="Save"/></button>
+                  <button class="btn_options" @click="deleteItemList(this.value_list_name)"><img :src="Delete"/></button>
+                </div>
+                  <button class="btn_options" v-else @click="openEditList()"><img :src="Edit"/></button>
+               
             </button>
             <input class="checkbox" type="checkbox" v-model="check_status" @click="set_check_status(this.value_list_name)">
         </div>
@@ -21,6 +25,9 @@
 
 <script>
 import MainMenu_main_today_itemContent from '../components/MainMenu_main_today_itemContent.vue';
+import Delete from '../icons/delete.svg';
+import Save from '../icons/save.svg'
+import Edit from '../icons/edit.svg'
 
 import { useUserStore } from '../stores/userStore';
 export default{
@@ -39,10 +46,19 @@ export default{
             value_list_name: this.list.list_name, 
             check_status: false,
             ischecked: false,
+
+            Delete:Delete,
+            Save:Save,
+            Edit:Edit,
+            disabled: true,
         }
     },
 
     methods: {
+
+      openEditList(){
+        this.disabled = false
+      },
 
       saveItemList(value_list_name) {            
             this.list.list_name = this.value_list_name
@@ -52,19 +68,12 @@ export default{
             console.log(this.userStore.checkEmtyToDoList);
 
             this.userStore.updateTo_do_list_on_calendar(value_list_name)
+            this.disabled = true
       },
 
       deleteItemList(){
         this.userStore.removeTo_do_list_on_calendar(this.list)
       },
-      
-        // showContentBar(){
-        //     this.showContent = !this.showContent
-        //     this.list.content.sort((prev, next) => {
-        //         if (prev.completed_status < next.completed_status) return -1;
-        //         if (prev.completed_status < next.completed_status) return 1;
-        //     }) 
-        // },
 
         set_check_status(value_list_name) {
             console.log(this.list.completed_status_to_do_list);
@@ -78,18 +87,11 @@ export default{
                         this.list.completed_status_to_do_list = 'yes'
                         this.ischecked = true
             } 
-            this.userStore.sortList()
+            // this.userStore.sortList()
 
-            // if(this.userStore.checkTodayOrMonth == true) {
-              // this.userStore.today_updateTo_do_list(this.value_list_name, this.list)
-            // }
-            // else{
               this.list.list_name = this.value_list_name
             this.userStore.dayToDoListItem = this.list
               this.userStore.updateTo_do_list_on_calendar(value_list_name)
-            // }
-
-          
         },
         editTo_do_list(){
           
@@ -111,10 +113,6 @@ export default{
 
     setup() {
         const userStore = useUserStore();
-        // if(userStore.checkTodayOrMonth == true) {
-        //   console.log('dsdsd');
-        //   userStore.setToDoList()
-        // }
        
         return{
             userStore
@@ -131,12 +129,42 @@ export default{
             this.check_status = false
             this.ischecked = false
         }
+
+        if(this.list.list_name == ''){
+          this.disabled = false
+        }
     },
 }
 </script>
 
 <style scoped>
+.container_undisabled_btn{
+  display: flex;
+  flex-direction: row;
+}
+.btn_options{
+  margin-right: 5px;
+  height: 25px;
+  width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  /* font-weight: bolder; */
+}
+.btn_options:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px
+}
+.img{
+  height: 20px;
+  width: 20px;
+}
+
+
 .main_item{
+    color: black;
     width: 100%;
     display: flex;
     justify-content:space-between;
@@ -144,6 +172,9 @@ export default{
     border: none;
     background: none;
     font-size: xx-large;
+}
+.main_item_pointer-events{
+  pointer-events:none;
 }
 .item_list{
   width: 100%;
@@ -196,18 +227,10 @@ export default{
   opacity: 0;
   transform: translateX(30px);
 }
-.itemContent-move {
-  /* transition: transform 0.2s ease; */
-}
 .itemContent-complete-item {
   transition: all 0.3s ease;
   display: inline-block;
   margin-right: 10px;
-}
-.itemContent-complete-enter-from,
-.itemContent-complete-leave-to {
-  /* opacity: 0;
-  transform: translateY(30px); */
 }
 .itemContent-complete-leave-active {
   position: absolute;

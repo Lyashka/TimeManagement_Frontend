@@ -1,7 +1,7 @@
 <template>
   <div class="MainMenu_sideBar">
         <a class="sideBar_item" href="/my_calendar">Календарь</a>
-        <a class="sideBar_item" href="">Цели</a>
+        <a class="sideBar_item" href="/purpose">Цели</a>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
-    <div class="btn_container">
-        <button class="btn_element" @click="add_to_do_list()"><img :src="plus" alt=""/></button>
-    </div>
+  <div>
+    <button class="btn" @click="addPurp()"><img :src="plus"/></button>
+  </div>
 </template>
 
 <script>
@@ -14,37 +14,30 @@ export default {
             plus:plus
         }
     },
+
     methods: {
-        add_to_do_list(){
-            this.userStore.addTo_do_list_on_calendar()
+        addPurp(){
+            this.userStore.createPurpose()
         }
     },
+
     setup() {
         const userStore = useUserStore();
-
-        return{
+        return {
             userStore
         }
     }
+
 }
 </script>
 
 <style scoped>
-.btn_container{
-    display: flex;
-    flex-direction: column;
-    margin-top: 1em;
-    margin-left: 1em; 
-}
-.btn_element{
+.btn{
     margin-top: 1em;
     height: 40px;
     width: 40px;
     background: none;
     border-radius: 10px;
     background-color: rgba(255, 251, 0, 0.153);
-}
-.btn_element:hover{ 
-    background-color: #fff;
 }
 </style>
