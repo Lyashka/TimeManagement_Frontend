@@ -1,14 +1,15 @@
 <template>
   <div>
-    <MainMenu_header></MainMenu_header>
-    <div class="main_container_purp">
-        <Purpose_container class="purp_container">
-            <Purpose_item v-for="item of this.userStore.purpose_array" :key="item.purp_id" :item="item">
+    <MainMenu_header></MainMenu_header> 
+    <a class="sideBar_item" href="/mainMenu">На главную</a>
+        <div class="main_container_purp">
+            <Purpose_container class="purp_container">
+                <Purpose_item v-for="item of this.userStore.purpose_array" :key="item.purp_id" :item="item">
 
-            </Purpose_item>
-        </Purpose_container>
-        <add_purpose_btns class="add_btn"></add_purpose_btns>
-    </div>
+                </Purpose_item>
+            </Purpose_container>
+            <add_purpose_btns class="add_btn"></add_purpose_btns>
+        </div>
   </div>
 </template>
 
@@ -44,6 +45,27 @@ export default {
 </script>
 
 <style scoped>
+.sideBar_item{
+    text-decoration: none;
+    margin-top: 0.5em;
+    height: 2em;
+    width: 200px;
+    font-size: x-large;
+    padding-left: 2.5em;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    color: black;
+    border-radius: 5px;
+
+}
+.sideBar_item:hover{
+    background-color: rgba(255, 251, 0, 0.247);
+}
+.container_purpose{
+    display: flex;
+    flex-direction: row;
+}
 .main_container_purp{
      
     display: flex;
@@ -60,11 +82,5 @@ export default {
 .add_btn{
     margin-top: 1em;
     margin-left: 1em;
-}
-
-.test{
-    width: 300px;
-    height: 300px;
-    border: 1px solid black
 }
 </style>

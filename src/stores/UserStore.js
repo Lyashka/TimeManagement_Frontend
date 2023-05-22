@@ -19,7 +19,12 @@ export const useUserStore = defineStore('userStore', {
         checkTodayOrMonth: false,
         checkStatusAddNewToDoList: false,
 
-        purpose_array: []
+        purpose_array: [],
+
+        completedEvents: '',
+        notCompletedEvents: '',
+
+        myChart: ''
     }),
 
     getters: {
@@ -100,16 +105,11 @@ export const useUserStore = defineStore('userStore', {
             this.calendar_data_list = []
             this.user.to_do_list.forEach(item => {
 
-                console.log(item.date_start.substr(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3-$2-$1"));
-                console.log(this.dayToDoListDate.replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3-$2-$1"));
-                
-
                 if (item.date_start.substr(0,10).replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3.$2.$1") === this.dayToDoListDate.replace(/(\d{4})-(\d{2})-(\d{2})/g,"$3.$2.$1")) {
                     console.log(item);    
                     this.calendar_data_list.push(item)
                 }
               });
-              console.log('F');
               console.log(this.calendar_data_list);
               localStorage.setItem('toDoList', JSON.stringify(this.calendar_data_list))
               await this.sortListDay(this.calendar_data_list)
@@ -172,11 +172,7 @@ export const useUserStore = defineStore('userStore', {
                     await this.sortListDay(this.calendar_data_list)
         },
         async updateTo_do_list_on_calendar(value_list_name){
-          
             console.log(this.calendar_data_list);
-            // console.log('start update lists');
-            // console.log(this.dayToDoListItem);
-
 
             await axios.put('http://localhost:8080/api/user/new-to-do-list', {
                 "date_start": this.dayToDoListDate,
@@ -195,15 +191,11 @@ export const useUserStore = defineStore('userStore', {
                     'title': value_list_name,
                     'start': this.dayToDoListDate,
                 })
-                // this.repeatGetUser(this.user.email, this.user.password)
             }
             else if(this.checkStatusAddNewToDoList == false){
                 this.dataEvents.forEach(e => {
                     if (e.id == this.dayToDoListItem.to_do_list_id) {
                         e.title = value_list_name
-                        // console.log(value_list_name);
-                        // console.log(e);
-                        // console.log(this.user);
                     }
                 })
 
@@ -212,13 +204,10 @@ export const useUserStore = defineStore('userStore', {
                                     e.completed_status_to_do_list = this.dayToDoListItem.completed_status_to_do_list
                                 }
                             })
-
-                
             }
             this.repeatGetUser(this.user.email, this.user.password)
             this.checkStatusAddNewToDoList = false
-            
-           
+
         },
 
 
@@ -308,7 +297,21 @@ export const useUserStore = defineStore('userStore', {
                 console.log(res);
             })
             await this.getPurpose()
-        }
+        },
+
+
+
+        async updateChart(myChart) {
+           
+            console.log(myChart.data);
+            this.completedEvents = this.user.to_do_list.filter(item => item.completed_status_to_do_list == 'yes')
+            this.notCompletedEvents = this.user.to_do_list.filter(item => item.completed_status_to_do_list == 'no')
+
+            console.log(this.completedEvents.length);
+            myChart.data.datasets[0].data.push(this.completedEvents.length, this.notCompletedEvents.length)
+            console.log(myChart.data.datasets[0].data);
+            myChart.update();
+        },
     }
 })
 

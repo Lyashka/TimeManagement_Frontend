@@ -10,7 +10,7 @@
       <!-- </transition-group> -->
     </MainMenu_main_container>
     <To_do_list_Buttons></To_do_list_Buttons>
-    <Analytics_container></Analytics_container>
+      <Analytics_container class="analitics_container"></Analytics_container>
   </div>
 </template>
 
@@ -68,6 +68,14 @@ export default{
 </script>
 
 <style scoped>
+.analitics_container{
+  display: flex;
+  border: 1px solid black;
+  margin-top: 1em;
+  margin-left: 1em;
+  width: 550px;
+  max-height: 300px;
+}
 .mainMenu_container{
   display: flex;
   flex-direction: row;

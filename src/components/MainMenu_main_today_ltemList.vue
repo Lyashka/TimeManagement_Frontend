@@ -92,6 +92,7 @@ export default{
               this.list.list_name = this.value_list_name
             this.userStore.dayToDoListItem = this.list
               this.userStore.updateTo_do_list_on_calendar(value_list_name)
+              // this.userStore.updateChart(myChart)
         },
         editTo_do_list(){
           
@@ -113,9 +114,9 @@ export default{
 
     setup() {
         const userStore = useUserStore();
-       
+
         return{
-            userStore
+            userStore,
         }
     },
  
