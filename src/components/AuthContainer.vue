@@ -17,16 +17,15 @@
     padding: auto;
     height: 600px;
     width: 700px;
-    border: 1px solid rgba(0, 0, 0, 0.478);
-    border-radius: 16px;
+    border-radius: 30px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 .sign_in_container{
     margin: auto;
     margin-top: 10%;
-    padding: auto;
+    padding-top: 10%;
     height: 450px;
-    width: 600px;
-    border: 1px solid rgba(0, 0, 0, 0.455);
+    width: 100%;
     display: flex;
     flex-direction: column;
   }

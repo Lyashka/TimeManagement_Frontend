@@ -1,11 +1,12 @@
 <template>
   <MainMenu_header/>
     <AuthContainer>
-            <label class="reg_el reg_label">Registration</label>
-            <input class="reg_el" type="text" placeholder="enter your login">
-            <input class="reg_el" type="text" placeholder="enter your email">
-            <input class="reg_el" type="text" placeholder="enter password">
-            <button class="reg_el reg_btn">Sign up</button>
+            <label class="reg_el reg_label">Регистрация</label>
+            <input class="reg_el" type="text" placeholder="Введите login">
+            <input class="reg_el" type="text" placeholder="Введите email">
+            <input class="reg_el" type="password" placeholder="Введите пароль">
+            <button class="reg_el reg_btn">Зарегистрировать</button>
+            <a class="reg_el" href="/">Вернуться к авторизации</a>
     </AuthContainer>
 </template>
 
@@ -18,7 +19,7 @@ import MainMenu_header from '../components/MainMenu_header.vue';
   .reg_el{
     margin: auto;
     height: 60px;
-    width: 400px;
+    width: 500px;
     display: flex;
     align-items: center;
     justify-content: center; 
@@ -35,6 +36,7 @@ import MainMenu_header from '../components/MainMenu_header.vue';
   .reg_btn{
     background: none;
     border: none;
+    font-size: x-large;
   }
   .reg_btn:hover{
     background-color: rgb(228, 228, 228);

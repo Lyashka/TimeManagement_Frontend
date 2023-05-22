@@ -4,8 +4,8 @@
         <img class="img_main_menu" src="" alt="">
         <label class="label_main_menu">BeeWork</label>
     </div>
-    <div v-if="userStore.user[0] !== undefined" class="rigth_container_el">
-        <label  class="text_User_Name">{{ userStore.user[0].user_name }}</label>
+    <div v-if="userStore.user.length == undefined" class="rigth_container_el">
+        <label  class="text_User_Name">{{ userStore.user.user_name }}</label>
         <button class="userBtnPanel"></button>
     </div>
   </header>

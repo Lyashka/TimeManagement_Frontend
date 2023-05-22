@@ -1,15 +1,15 @@
 <template>
   <MainMenu_header/>
      <AuthContainer>
-          <label class="auth_el auth_label">Authorization</label>
+          <label class="auth_el auth_label">Авторизация</label>
           <div>
             <div class="textNotFoundUser">{{ userStore.notFoundUser }}</div>
-            <input class="auth_el" type="text" placeholder="Enter your email" v-model="userEmail">
+            <input class="auth_el" type="text" placeholder="Введите email" v-model="userEmail">
           </div>
-          <input class="auth_el" type="password" placeholder="Enter the password" v-model="userPassword">
+          <input class="auth_el" type="password" placeholder="Введите пароль" v-model="userPassword">
           <div class="auth_btns_container">
-            <button class="auth_el auth_btn" @click.prevent="userStore.getUser(userEmail, userPassword)">Sign in</button>
-            <a class="auth_el" href="/registration">registration</a>
+            <button class="auth_el auth_btn" @click.prevent="userStore.getUser(userEmail, userPassword)">Войти</button>
+            <a class="auth_el" href="/registration">Регистрация</a>
         </div>
      </AuthContainer>
 </template>
@@ -30,7 +30,7 @@ let userPassword
   .auth_el{
     margin: auto;
     height: 60px;
-    width: 400px;
+    width: 500px;
     display: flex;
     align-items: center;
     justify-content: center; 
