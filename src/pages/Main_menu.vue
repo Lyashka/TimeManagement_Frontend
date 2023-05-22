@@ -10,7 +10,10 @@
       <!-- </transition-group> -->
     </MainMenu_main_container>
     <To_do_list_Buttons></To_do_list_Buttons>
+    <div class="container_rigth_elementOnMainMenu">
       <Analytics_container class="analitics_container"></Analytics_container>
+      <PrewPupose></PrewPupose>
+    </div>
   </div>
 </template>
 
@@ -21,12 +24,13 @@ import MainMenu_main_container from '../components/MainMenu_main_container.vue';
 import MainMenu_main_today_ltemList from '../components/MainMenu_main_today_ltemList.vue';
 import To_do_list_Buttons from '../components/To_do_list_btns.vue';
 import Analytics_container from '../components/Analytics_container.vue';
+import PrewPupose from '../components/PrewPupose.vue';
 
 import { useUserStore } from '../stores/userStore';
 
 export default{
   components:{
-    MainMenu_header, MainMenu_sideBar, MainMenu_main_container, MainMenu_main_today_ltemList, To_do_list_Buttons, Analytics_container
+    MainMenu_header, MainMenu_sideBar, MainMenu_main_container, MainMenu_main_today_ltemList, To_do_list_Buttons, Analytics_container,PrewPupose
   },
 
   data() { 
@@ -68,13 +72,18 @@ export default{
 </script>
 
 <style scoped>
+.container_rigth_elementOnMainMenu{
+  display: flex;
+  flex-direction: column;
+}
 .analitics_container{
   display: flex;
-  border: 1px solid black;
   margin-top: 1em;
   margin-left: 1em;
   width: 550px;
-  max-height: 300px;
+  min-height: 400px;
+  border-radius: 30px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 .mainMenu_container{
   display: flex;

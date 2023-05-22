@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {defineStore} from 'pinia'
 
+import Chart from 'chart.js/auto'
 
 export const useUserStore = defineStore('userStore', {
     state: () => ({
@@ -207,7 +208,6 @@ export const useUserStore = defineStore('userStore', {
             }
             this.repeatGetUser(this.user.email, this.user.password)
             this.checkStatusAddNewToDoList = false
-
         },
 
 
@@ -302,10 +302,29 @@ export const useUserStore = defineStore('userStore', {
 
 
         async updateChart(myChart) {
+
+            let events_arr = []
+
+            const TodayDate = new Date()
+            const month = TodayDate.getMonth() + 1;
+            const year = TodayDate.getFullYear();
+            const formattedDate = `${month}.${year}`
+    
+            this.user.to_do_list.forEach(e => {
+                let otherDate = new Date(`${e.date_start}`)
+                let month2 = otherDate.getMonth() + 1; 
+                let year2 = otherDate.getFullYear();
+                let dateUserEvent = `${month2}.${year2}`
+                
+                if(dateUserEvent == formattedDate) {
+                    events_arr.push(e)
+                }
+            })
+             console.log(events_arr);
            
             console.log(myChart.data);
-            this.completedEvents = this.user.to_do_list.filter(item => item.completed_status_to_do_list == 'yes')
-            this.notCompletedEvents = this.user.to_do_list.filter(item => item.completed_status_to_do_list == 'no')
+            this.completedEvents = events_arr.filter(item => item.completed_status_to_do_list == 'yes')
+            this.notCompletedEvents = events_arr.filter(item => item.completed_status_to_do_list == 'no')
 
             console.log(this.completedEvents.length);
             myChart.data.datasets[0].data.push(this.completedEvents.length, this.notCompletedEvents.length)

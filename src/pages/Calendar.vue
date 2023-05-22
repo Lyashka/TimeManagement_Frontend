@@ -58,13 +58,15 @@ export default{
             // calendar_data_list: [],
             // dataEvents: [],
             options:{
+                
                 locale: ruLocale,
                 plugins:[dayGridPlugin, timeGridPlugin, interationPlugin],
                 initialDate: '2023-05-06',
                 headerToolbar: {
                     left: 'prev,next',
                     center: 'title',
-                    right: 'dayGridMonth, dayGridWeek'
+                    right: 'dayGridMonth, dayGridWeek',
+                    
                 },
                 initialView: 'dayGridMonth',
                 selectable: true,
