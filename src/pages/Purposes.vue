@@ -78,6 +78,8 @@ export default {
 .purp_container{
     display: flex;
     flex-direction: column;
+    border-radius: 30px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 .add_btn{
     margin-top: 1em;

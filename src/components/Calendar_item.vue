@@ -23,13 +23,13 @@ export default {
 .calendar_item_container{
     min-height: 500px;
     width: 700px;
-    border: 1px solid black;
-
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%); 
     background-color: rgb(255, 255, 225);   
+    border-radius: 30px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 
 

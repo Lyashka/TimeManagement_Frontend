@@ -41,6 +41,7 @@ export default {
     height: 40px;
     width: 40px;
     background: none;
+    border: 0.5px solid rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     background-color: rgba(255, 251, 0, 0.153);
 }

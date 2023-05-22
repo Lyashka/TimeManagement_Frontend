@@ -3,6 +3,7 @@
     <div>
       <label>За {{ nameMonthToday }}:</label>
       <canvas id="myChart" width="300" height="300"></canvas>
+      
     </div>
    <div>
      <label class="lableRigth">За {{ nameMonthPrew }}:</label>

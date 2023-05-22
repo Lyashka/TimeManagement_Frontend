@@ -12,12 +12,12 @@
 
         <Calendar_item v-if="calendarItemShow" class="zindex_calendar_item">
             <!-- <div class="calendar_item"> -->
-                <div>
+                <div class="container_itemList_onCalendar">
                     <div class="top_bar_list_calendar">
                         <To_do_list_btns_for_calendar></To_do_list_btns_for_calendar>
-                        <button @click="closeCalendarItem">Click me</button>
+                        <button class="noneStyleBtn" @click="closeCalendarItem"><img :src="Close"/></button>
                     </div>
-                    <MainMenu_main_today_ltemList v-for="list of this.userStore.calendar_data_list" :key="list.to_do_list_id" :list="list">
+                    <MainMenu_main_today_ltemList  v-for="list of this.userStore.calendar_data_list" :key="list.to_do_list_id" :list="list">
 
                     </MainMenu_main_today_ltemList>
                  </div>
@@ -45,7 +45,8 @@
         import ruLocale from '@fullcalendar/core/locales/ru.cjs'
         import {INITIAL_EVENTS, createEventId} from '../event-utils'
         import { useUserStore } from '../stores/userStore'
-      
+
+        import Close from '../icons/close.svg'
 
 export default{
     components: {
@@ -54,6 +55,8 @@ export default{
 
     data() {
         return {
+            Close:Close,
+
             calendarItemShow: false,
             // calendar_data_list: [],
             // dataEvents: [],
@@ -171,6 +174,19 @@ export default{
 </script>
 
 <style scoped>
+.container_itemList_onCalendar{
+    border-radius: 10px;
+}
+.noneStyleBtn{
+    background: none;
+    border: none;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+}
+.noneStyleBtn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
 .calendar_container{
     display: flex;
     width: 100em;

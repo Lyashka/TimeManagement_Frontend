@@ -58,11 +58,11 @@ export default {
     display: flex;
     font-size: x-large;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    margin-left: 0.5em;
 }
 .btn_open_purpose{
     text-decoration: none;
     margin-right: 1em;
-    /* background-color: rgba(0, 0, 0, 0.12); */
     border-radius: 5px;
     height: 1em;
 }

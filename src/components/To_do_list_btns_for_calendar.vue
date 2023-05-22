@@ -1,15 +1,17 @@
 <template>
     <div class="btn_container">
-        <button class="btn_element" @click="add_to_do_list()">Add In calendar</button>
+        <button class="btn_element" @click="add_to_do_list()">Создать</button>
     </div>
 </template>
 
 <script>
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../stores/userStore'; 
+import Plus from '../icons/plus.svg' 
+
 export default {
     data() {
         return {
-            
+            Plus:Plus,
         }
     },
     methods: {
@@ -33,5 +35,15 @@ export default {
 .btn_container{
     margin-left: auto;
     margin-right: auto;
+
+}
+.btn_element{
+    background: none;
+    border: none;
+    font-size: x-large;
+    border-radius:5px;
+} 
+.btn_element:hover {
+    background-color:#2c3e5030;
 }
 </style>

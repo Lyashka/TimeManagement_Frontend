@@ -16,7 +16,6 @@ export default {
     /* margin: auto; */
     min-height: 40em;
     width: 60em;
-    border: 1px solid black;
     margin-top: 1em;
 }
 .purp_label{
