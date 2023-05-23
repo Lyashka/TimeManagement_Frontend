@@ -1,13 +1,14 @@
 <template>
   <div class="contsinerOnAnalytics">
-    <div>
+    <div >
       <label>За {{ nameMonthToday }}:</label>
       <canvas id="myChart" width="300" height="300"></canvas>
-      
+      <label class="countCompletedEvents"> {{ this.userStore.completedEvents.length }} </label>
     </div>
    <div>
      <label class="lableRigth">За {{ nameMonthPrew }}:</label>
      <canvas id="myChartMonth" width="200" height="200"></canvas> 
+     <label class="countCompletedEvents"> {{ this.comletedValue.length }} </label>
    </div>
   </div>
 </template>
@@ -22,6 +23,7 @@ export default {
     return {
       nameMonthToday: '',
       nameMonthPrew: '',
+      comletedValue: ''
     }
   },
   computed: {
@@ -131,6 +133,7 @@ methods: {
   let notCompleted = events_arr.filter(item => item.completed_status_to_do_list == 'no')
   console.log(completed);
   console.log(notCompleted);
+  this.comletedValue = completed
 
 
   const ctx = document.getElementById('myChart')
@@ -138,14 +141,14 @@ methods: {
   const data = {
   labels: [
     'Выполненные',
-    'Не выполненные'
+    'Не выполненные',
   ],
   datasets: [{
     label: 'Задач',
     data: [],
     backgroundColor: [
-      'rgb(0, 160, 29)',
-      'rgb(255, 99, 132)',
+      '#12B052',
+      '#EB5A38', 
     ],
     hoverOffset: 4
   }]
@@ -153,7 +156,7 @@ methods: {
   const options = { 
     plugins:{
       legend: {
-        position: 'top',
+        // position: 'rigth',
       },
     },
   }
@@ -178,8 +181,8 @@ methods: {
     label: 'Задач',
     data: [],
     backgroundColor: [
-      'rgb(0, 160, 29)',
-      'rgb(255, 99, 132)',
+      '#94F9BD',
+      '#FEAB97',
     ],
     hoverOffset: 4
   }]
@@ -208,6 +211,13 @@ methods: {
 </script>
 
 <style scoped>
+.countCompletedEvents{
+  margin-top: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1em;
+}
 .contsinerOnAnalytics{
   display: flex;
   flex-direction: row;

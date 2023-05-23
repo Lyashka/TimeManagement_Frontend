@@ -34,7 +34,7 @@ export default {
 <style scoped>
 .header_container{
     height: 3em;
-    background-color: rgba(255, 251, 0, 0.153);
+    background-color: #FCEAA3;
     display: flex;
     align-items: center;
     padding-left: 30px;

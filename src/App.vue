@@ -12,4 +12,7 @@
   padding: 0;
   font-family: 'Roboto', sans-serif;
 }
+html{
+  background-color: #fcfadd6f;
+}
 </style>

@@ -5,7 +5,7 @@
        <a href="/purpose" class="btn_open_purpose">Открыть</a>
     </div> 
     <div v-for="item of this.userStore.purpose_array" :key="item.purp_id">
-        <div class="item_style" v-if="item.completed_status == 'no'">{{ item.purp_name }}</div>
+        <div class="item_style" v-if="item.completed_status == 'no'"><span>{{ item.purp_name }}</span></div>
     </div>
   </div>
 </template>
@@ -31,6 +31,9 @@ export default {
 </script>
 
 <style scoped>
+span{
+    margin-left: 0.5em;;
+}
 .prewPurpose_container{
     width: 550px;
     min-height: 350px;
@@ -58,7 +61,7 @@ export default {
     display: flex;
     font-size: x-large;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    margin-left: 0.5em;
+
 }
 .btn_open_purpose{
     text-decoration: none;
