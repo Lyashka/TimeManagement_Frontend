@@ -6,14 +6,29 @@
     </div>
     <div v-if="userStore.user.length == undefined" class="rigth_container_el">
         <label  class="text_User_Name">{{ userStore.user.user_name }}</label>
-        <button class="userBtnPanel"></button>
+        <button class="userBtnPanel"><img class="user_style" :src="User"/></button>
     </div>
   </header>
 </template>
 
-<script setup>
+<script >
 import { useUserStore } from '../stores/userStore';
-const userStore = useUserStore();
+import User from '../icons/user.svg'
+export default {
+    data() {
+        return {
+            User:User
+        }
+    },
+    setup() {
+        const userStore = useUserStore();
+
+        return{
+            userStore
+        }
+    }
+}
+
 </script>
 
 <style scoped>
@@ -41,6 +56,10 @@ const userStore = useUserStore();
     margin-right: 1em;
     height: 3em;
     width: 3em;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
 }
 .left_header_container{
     height: 3em;
@@ -53,9 +72,13 @@ const userStore = useUserStore();
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 }
 .text_User_Name{
     margin-right: 1em;
     font-size: x-large;
+}
+.user_style{
+
 }
 </style>

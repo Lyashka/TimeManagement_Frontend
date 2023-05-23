@@ -148,14 +148,13 @@ export default{
         this.userStore.user.to_do_list.forEach(e => {
             let evvent_color = '#E78C76'
             if(e.completed_status_to_do_list == 'yes'){
-                evvent_color = '#DAFABB'
+                evvent_color = 'rgba(0, 160, 29, 0.7)'
             }
             let newEvent = {
                 id: e.to_do_list_id,
                 title: e.list_name,
                 start: e.date_start.substr(0,10).replace(/(\d{2})-(\d{2})-(\d{4})/g,"$3-$2-$1"),
                 color:  evvent_color,
-                // color: 'rgba(255, 251, 0, 0.153)'
             }
             this.userStore.dataEvents.push(newEvent)
         })
