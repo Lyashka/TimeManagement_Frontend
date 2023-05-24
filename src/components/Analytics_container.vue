@@ -3,12 +3,12 @@
     <div >
       <label>За {{ nameMonthToday }}:</label>
       <canvas id="myChart" width="300" height="300"></canvas>
-      <label class="countCompletedEvents"> {{ this.userStore.completedEvents.length }} </label>
+      <label class="countCompletedEvents"> {{ this.userStore.completedEvents.length }}/{{ this.userStore.allevents.length }}</label>
     </div>
    <div>
      <label class="lableRigth">За {{ nameMonthPrew }}:</label>
      <canvas id="myChartMonth" width="200" height="200"></canvas> 
-     <label class="countCompletedEvents"> {{ this.comletedValue.length }} </label>
+     <label class="countCompletedEvents"> {{ this.comletedValue.length }}/{{ prewMonthLength }}</label>
    </div>
   </div>
 </template>
@@ -23,7 +23,9 @@ export default {
     return {
       nameMonthToday: '',
       nameMonthPrew: '',
-      comletedValue: ''
+      comletedValue: '',
+
+      prewMonthLength: '',
     }
   },
   computed: {
@@ -129,6 +131,8 @@ methods: {
             events_arr.push(e)
       }
   })
+  this.prewMonthLength = events_arr.length
+  console.log(events_arr);
   let completed = events_arr.filter(item => item.completed_status_to_do_list == 'yes')
   let notCompleted = events_arr.filter(item => item.completed_status_to_do_list == 'no')
   console.log(completed);

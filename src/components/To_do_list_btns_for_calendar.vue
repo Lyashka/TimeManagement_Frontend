@@ -1,7 +1,7 @@
 <template>
-    <div class="btn_container">
-        <button class="btn_element" @click="add_to_do_list()">Создать</button>
-    </div>
+        <div class="btn_container">
+            <button class="btn_element" @click="add_to_do_list()">Создать</button>
+        </div>
 </template>
 
 <script>
@@ -33,11 +33,17 @@ export default {
 
 <style scoped>
 .btn_container{
+    display: flex;
+    flex-direction: row;
     margin-left: auto;
     margin-right: auto;
+    align-items: center;
+    margin-right: 17em;
+
 
 }
 .btn_element{
+    /* display: flex; */
     background: none;
     border: none;
     font-size: x-large;

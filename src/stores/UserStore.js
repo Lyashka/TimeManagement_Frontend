@@ -22,6 +22,7 @@ export const useUserStore = defineStore('userStore', {
 
         purpose_array: [],
 
+        allevents: '',
         completedEvents: '',
         notCompletedEvents: '',
 
@@ -325,6 +326,9 @@ export const useUserStore = defineStore('userStore', {
             console.log(myChart.data);
             this.completedEvents = events_arr.filter(item => item.completed_status_to_do_list == 'yes')
             this.notCompletedEvents = events_arr.filter(item => item.completed_status_to_do_list == 'no')
+
+            this.allevents = events_arr
+            console.log(this.allevents);
 
             console.log(this.completedEvents.length);
             myChart.data.datasets[0].data.push(this.completedEvents.length, this.notCompletedEvents.length)

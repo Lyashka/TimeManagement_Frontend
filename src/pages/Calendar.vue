@@ -14,6 +14,9 @@
             <!-- <div class="calendar_item"> -->
                 <div class="container_itemList_onCalendar">
                     <div class="top_bar_list_calendar">
+
+                        <label class="dateOnItemCalendar">{{ this.userStore.dayToDoListDate }}</label>
+
                         <To_do_list_btns_for_calendar></To_do_list_btns_for_calendar>
                         <button class="noneStyleBtn" @click="closeCalendarItem"><img :src="Close"/></button>
                     </div>
@@ -173,6 +176,13 @@ export default{
 </script>
 
 <style scoped>
+.dateOnItemCalendar{
+    display: flex;
+    align-items: center;
+    margin-left: 1em;
+    margin-top: 0.5em;
+    font-size: x-large;
+}
 .container_itemList_onCalendar{
     border-radius: 10px;
 }
