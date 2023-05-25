@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header class="header_container">
+        <header class="header_container" :class="this.userStore.theme === 'light' ? 'light-theme' : 'dark-theme'">
             <div class="left_header_container">
                 <img class="img_main_menu" src="" alt="">
                 <label class="label_main_menu">BeeWork</label>
@@ -13,7 +13,9 @@
                         <label class="lable_on_profile">Добрый день {{ this.userStore.user.user_name }}</label>
                         <label>{{ this.userStore.user.email }}</label>
                     </div>
+                    <button @click="changeTheme()">change theme</button>
                     <button class="btn_exit" @click="exitInAccount">Выйти</button>
+                    <label class="label_varsion">Version: 1.0</label>
                 </div>  
             </div> 
         </header>
@@ -37,6 +39,9 @@ export default {
         exitInAccount() {
             localStorage.clear();
             window.location.href = '/'
+        },
+        changeTheme() {
+            this.userStore.theme = this.userStore.theme === 'dark' ? 'light' : 'dark';  
         }
     },
     setup() {
@@ -51,6 +56,11 @@ export default {
 </script>
 
 <style scoped>
+.label_varsion{
+    /* display: flex; */
+    margin-left: auto;
+    margin-right: 1em;
+}
 .btn_exit{
     border: none;
     background: none;
@@ -90,7 +100,6 @@ export default {
 }
 .header_container{
     height: 3em;
-    background-color: #FCEAA3;
     display: flex;
     align-items: center;
     padding-left: 30px;
@@ -138,7 +147,13 @@ export default {
     margin-right: 1em;
     font-size: x-large;
 }
-.user_style{
+.light-theme{
+    background-color: #FCEAA3;
+    color: black;
+}
 
+.dark-theme{
+    background-color: #2e3440;
+    color: antiquewhite;
 }
 </style>

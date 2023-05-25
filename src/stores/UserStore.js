@@ -5,6 +5,8 @@ import Chart from 'chart.js/auto'
 
 export const useUserStore = defineStore('userStore', {
     state: () => ({
+        theme: 'light',
+
         user: [],
         notFoundUser: '',
         toDoList: [],

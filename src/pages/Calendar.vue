@@ -4,11 +4,15 @@
 
         </div>
         <MainMenu_header></MainMenu_header>
-        <FullCalendar class="calendar_container" v-bind:options="options">
-            <template v-slot:eventContent='arg'>
-                <label class="title_item">{{ arg.event.title }}</label>
-            </template>
-        </FullCalendar>
+        <div class="cont_calendar_and_btnBack">
+            <a href="/mainMenu" class="btnBack">Назад</a>
+            <FullCalendar class="calendar_container" v-bind:options="options">
+                <template v-slot:eventContent='arg'>
+                    <label class="title_item">{{ arg.event.title }}</label>
+                </template>
+            </FullCalendar>
+        </div>
+        
 
         <Calendar_item v-if="calendarItemShow" class="zindex_calendar_item">
             <!-- <div class="calendar_item"> -->
@@ -176,6 +180,22 @@ export default{
 </script>
 
 <style scoped>
+.btnBack{
+    font-size: x-large;
+    margin-left: 2em;
+    text-decoration: none;
+    color: black
+}
+.btnBack:hover {
+    background-color: rgba(255, 251, 0, 0.247);
+    border-radius: 5px;
+}
+.cont_calendar_and_btnBack{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    margin-top: 1em;
+}
 .dateOnItemCalendar{
     display: flex;
     align-items: center;

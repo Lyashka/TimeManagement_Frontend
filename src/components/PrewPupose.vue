@@ -1,8 +1,8 @@
 <template>
-  <div class="prewPurpose_container">
+  <div class="prewPurpose_container" :class="this.userStore.theme === 'light' ? 'light-theme' : 'dark-theme'">
     <div class="labelMyPupose">
        <label class="lable">Мои цели:</label> 
-       <a href="/purpose" class="btn_open_purpose">Открыть</a>
+       <a href="/purpose" class="btn_open_purpose" :class="this.userStore.theme === 'light' ? 'light-theme' : 'dark-theme'">Открыть</a>
     </div> 
     <div v-for="item of this.userStore.purpose_array" :key="item.purp_id">
         <div class="item_style" v-if="item.completed_status == 'no'"><span>{{ item.purp_name }}</span></div>
@@ -68,5 +68,14 @@ span{
     margin-right: 1em;
     border-radius: 5px;
     height: 1em;
+}
+
+.light-theme{
+  color:black;
+  background-color: none;
+}
+.dark-theme{
+  background-color: #2e3440;
+  color:aliceblue;
 }
 </style>

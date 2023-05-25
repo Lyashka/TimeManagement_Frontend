@@ -1,5 +1,5 @@
 <template>
-  <div class="contsinerOnAnalytics">
+  <div class="contsinerOnAnalytics" :class="this.userStore.theme === 'light' ? 'light-theme' : 'dark-theme'">
     <div >
       <label>За {{ nameMonthToday }}:</label>
       <canvas id="myChart" width="300" height="300"></canvas>
@@ -233,5 +233,14 @@ label{
 }
 .lableRigth{
   margin-left: 1.4em;
+}
+
+.light-theme{
+  color:black;
+  background-color: none;
+}
+.dark-theme{
+  background-color: #2e3440;
+  color:aliceblue;
 }
 </style>

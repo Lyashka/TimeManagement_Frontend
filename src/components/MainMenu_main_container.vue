@@ -1,5 +1,5 @@
 <template>
-  <div class="main_container">
+  <div class="main_container" :class="userStore.theme === 'light' ? 'light-theme' : 'dark-theme'">
     <div class="date_container">
     Cегодня: {{ day }} {{ dateOnNewDate }}
     </div>
@@ -61,5 +61,13 @@ let dateOnNewDate = new Date().toLocaleDateString()
   align-items: center;
   font-size: x-large;
   justify-content: center;
+}
+
+.light-theme{
+  color:black;
+}
+.dark-theme{
+  background-color: #2e3440;
+  color:aliceblue;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="btn_container">
-        <button class="btn_element" @click="add_to_do_list()"><img :src="plus" alt=""/></button>
+        <button class="btn_element" @click="add_to_do_list()" :class="this.userStore.theme === 'light' ? 'light-theme' : 'dark-theme'"><img :src="plus" alt=""/></button>
     </div>
 </template>
 
@@ -47,5 +47,13 @@ export default {
 }
 .btn_element:hover{ 
     background-color: #FCF9DD;
+}
+.light-theme{
+  color:black;
+  background-color: none;
+}
+.dark-theme{
+  background-color: #2e3440;
+  color:aliceblue;
 }
 </style>

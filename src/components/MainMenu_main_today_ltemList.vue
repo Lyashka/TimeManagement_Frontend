@@ -2,7 +2,7 @@
     <div>
         <div class="container_main_item" >
             <button  @click="showContentBar" class="item_list" >
-                <input  type="text" v-model="value_list_name" class="main_item" :class="{'checked' : ischecked}" placeholder="Введите значение" :disabled="disabled">
+                <input  type="text" v-model="value_list_name" class="main_item" :class="{'checked' : ischecked}" placeholder="Введите значение" :disabled="disabled" >
                 <div class="container_undisabled_btn" v-if="disabled == false">
                   <button class="btn_options" @click="saveItemList(this.value_list_name)"><img :src="Save"/></button>
                   <button class="btn_options" @click="deleteItemList(this.value_list_name)"><img :src="Delete"/></button>
@@ -165,7 +165,7 @@ export default{
 
 
 .main_item{
-    color: black;
+    /* color: wheat; */
     width: 100%;
     display: flex;
     justify-content:space-between;
@@ -178,6 +178,7 @@ export default{
   pointer-events:none;
 }
 .item_list{
+  /* color:#fff; */
   width: 100%;
   display: flex;
   font-size: xx-large;
@@ -251,7 +252,7 @@ input[type="checkbox"] {
   background-color: rgba(255, 251, 0, 0.100);;
   margin-right: 2em;
   /* font: inherit; */
-  color: currentColor;
+  /* color: currentColor; */
   width: 2em;
   height: 2em;
   border: 0.15em solid rgba(0, 0, 0, 0.500);
@@ -284,5 +285,14 @@ input[type="checkbox"]::before {
 input[type="checkbox"]::before {
   transform-origin: bottom left;
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.light-theme{
+  color:black;
+  background-color: none;
+}
+.dark-theme{
+  background-color: #2e3440;
+  color:aliceblue;
 }
 </style>
